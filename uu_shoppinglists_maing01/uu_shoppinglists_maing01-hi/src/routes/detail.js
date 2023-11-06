@@ -1,21 +1,23 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content } from "uu5g05";
 import Config from "./config/config.js";
+import { withRoute } from "uu_plus4u5g02-app";
+import RouteBar from "../core/route-bar";
+import DataProvider from "../bricks/detail/data-provider.js";
+import DetailView from "../bricks/detail/detail-view.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
 //@@viewOff:constants
 
 //@@viewOn:css
-const Css = {
-  main: () => Config.Css.css({}),
-};
+
 //@@viewOff:css
 
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const Detail = createVisualComponent({
+let Detail = createVisualComponent({
   //@@viewOn:statics
   uu5Tag: Config.TAG + "Detail",
   nestingLevel: ["areaCollection", "area"],
@@ -30,26 +32,21 @@ const Detail = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
-    //@@viewOn:private
-    const { children } = props;
-    //@@viewOff:private
-
-    //@@viewOn:interface
-    //@@viewOff:interface
-
+    
     //@@viewOn:render
-    const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
-    const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, Detail);
-
-    return currentNestingLevel ? (
-      <div {...attrs}>
-        <div>Visual Component {Detail.uu5Tag}</div>
-        <Content nestingLevel={currentNestingLevel}>{children}</Content>
-      </div>
-    ) : null;
+    return (
+      <>
+        <RouteBar />
+        <DataProvider>
+          {({ shoppingList, remove, update }) => <DetailView shoppingList={shoppingList} onDelete={remove} onUpdate={update} />}
+    </DataProvider>
+    </>
+  );
     //@@viewOff:render
   },
 });
+
+Detail = withRoute(Detail, { authenticated: false });
 
 //@@viewOn:exports
 export { Detail };
