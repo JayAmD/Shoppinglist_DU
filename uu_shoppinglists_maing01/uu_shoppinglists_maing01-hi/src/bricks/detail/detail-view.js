@@ -45,7 +45,7 @@ const DetailView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <div>
-        <ItemList shoppingListItemList ={props.shoppingList.itemList}></ItemList>
+        <ItemList shoppingListItemList ={props.shoppingList.itemList} onDelete={props.onDelete}></ItemList>
            {DetailView.uu5Tag}</div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

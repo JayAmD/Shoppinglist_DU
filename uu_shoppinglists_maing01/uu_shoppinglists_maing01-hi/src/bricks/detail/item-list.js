@@ -66,6 +66,7 @@ const ItemList = createVisualComponent({
     //@@viewOn:interface
     //@@viewOff:interface
     function itemList(list) {
+      
       let itemList = list.map((item) => <Item item={item} key={item.id} onDelete={handleDelete} />);
       return itemList;
     }
