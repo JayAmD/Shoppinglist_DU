@@ -32,16 +32,23 @@ let Detail = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
-    
     //@@viewOn:render
     return (
       <>
         <RouteBar />
         <DataProvider>
-          {({ shoppingList, remove, update }) => <DetailView shoppingList={shoppingList} onDelete={remove} onUpdate={update} />}
-    </DataProvider>
-    </>
-  );
+          {({ shoppingList, remove, editItem, resolve, addItem }) => (
+            <DetailView
+              shoppingList={shoppingList}
+              onDelete={remove}
+              onEdit={editItem}
+              onResolve={resolve}
+              onAddItem={addItem}
+            />
+          )}
+        </DataProvider>
+      </>
+    );
     //@@viewOff:render
   },
 });

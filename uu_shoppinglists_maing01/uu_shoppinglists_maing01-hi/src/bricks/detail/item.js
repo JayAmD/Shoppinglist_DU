@@ -25,8 +25,6 @@ const Css = {
 //@@viewOff:css
 
 //@@viewOn:helpers
-//@@viewOff:helpers
-
 function withControlledInput(Input) {
   return (props) => {
     const { value: propsValue, onChange } = props;
@@ -50,6 +48,9 @@ function withControlledInput(Input) {
 
 const Checkbox = withControlledInput(Uu5Forms.Checkbox);
 const Text = withControlledInput(Uu5Forms.Text);
+//@@viewOff:helpers
+
+
 
 const Item = createVisualComponent({
   //@@viewOn:statics
@@ -62,15 +63,19 @@ const Item = createVisualComponent({
     item: PropTypes.shape({
       id: PropTypes.string.isRequired,
       value: PropTypes.string.isRequired,
-      isResolved: PropTypes.bool,
+      isResolved: PropTypes.bool.isRequired,
     }).isRequired,
     onDelete: PropTypes.func,
+    onEdit: PropTypes.func,
+    onResolve: PropTypes.func,
   },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
   defaultProps: {
     onDelete: () => {},
+    onEdit: () => {},
+    onResolve: () => {},
   },
   //@@viewOff:defaultProps
 
@@ -80,6 +85,15 @@ const Item = createVisualComponent({
 
     function handleDelete(event) {
       props.onDelete(new Utils.Event(props.item, event));
+    }
+
+    function handleEdit(event) {
+      let editedItem = { ...props.item, value: event.data.value };
+      props.onEdit(new Utils.Event(editedItem, event)); //TODO: Zde jsem si pomohl Spread operatorem v ratce nahore protoze se mi do Utils.Eventu neudkadal zmeneny value
+    }
+
+    function handleResolve(event) {
+      props.onResolve(new Utils.Event(props.item, event));
     }
     //@@viewOff:private
 
@@ -93,14 +107,14 @@ const Item = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <div>
-          <Checkbox
-            className={Css.checkbox()}
-            onChange={(e) => {
-              //TODO chnge isResolved function passed from DataProvider
-            }}
-          />
+          <Checkbox className={Css.checkbox()} value={props.item.isResolved} onChange={handleResolve} />
 
-          <Text iconRight="uugds-delete" onIconRightClick={handleDelete} />
+          <Text
+            value={props.item.value}
+            onChange={handleEdit}
+            iconRight="uugds-delete"
+            onIconRightClick={handleDelete}
+          />
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, useState } from "uu5g05";
+import { createComponent, useState, Utils } from "uu5g05";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -87,13 +87,42 @@ const DataProvider = createComponent({
       });
     }
 
-    function update() {
-      throw new Error("Joke update is not implemented yet.");
+    function editItem(item) {
+      setShoppingList((prevShoppingList) => {
+        let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
+        let result = { ...prevShoppingList };
+        result.itemList[editedIndex].value = item.value;
+        return result;
+      });
+    }
+
+    function resolve(item) {
+      setShoppingList((prevShoppingList) => {
+        let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
+        let result = { ...prevShoppingList };
+        result.itemList[editedIndex].isResolved
+          ? (result.itemList[editedIndex].isResolved = false)
+          : (result.itemList[editedIndex].isResolved = true);
+        return result;
+      });
+    }
+
+    function addItem(itemValue) {
+      setShoppingList((prevShoppingList) => {
+        let result = { ...prevShoppingList };
+        let addedItem = {
+          id: Utils.String.generateId(),
+          value: itemValue.value,
+          isResolved: false,
+        };
+        result.itemList.push(addedItem);
+        return result;
+      });
     }
     //@@viewOff:private
 
     //@@viewOn:render
-    const value = { shoppingList, remove, update };
+    const value = { shoppingList, remove, editItem, resolve, addItem };
     return typeof props.children === "function" ? props.children(value) : props.children;
     //@@viewOff:render
   },
