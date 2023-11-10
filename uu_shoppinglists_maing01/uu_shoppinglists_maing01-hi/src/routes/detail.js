@@ -37,13 +37,16 @@ let Detail = createVisualComponent({
       <>
         <RouteBar />
         <DataProvider>
-          {({ shoppingList, remove, editItem, resolve, addItem }) => (
+          {({ shoppingList, remove, editItem, resolve, addItem , deleteList,editTitle,archive}) => (
             <DetailView
               shoppingList={shoppingList}
               onDelete={remove}
               onEdit={editItem}
               onResolve={resolve}
               onAddItem={addItem}
+              onDeleteList={deleteList}
+          onEditTitle={editTitle}
+          onArchive={archive}
             />
           )}
         </DataProvider>

@@ -1,6 +1,7 @@
 //@@viewOn:imports
 import { createComponent, useState, Utils } from "uu5g05";
 import Config from "./config/config.js";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -119,10 +120,26 @@ const DataProvider = createComponent({
         return result;
       });
     }
+
+ 
+    function editTitle(title) {
+      setShoppingList((prevShoppingList) => {
+        let result = {...prevShoppingList, name:title}
+        return result;
+      });
+    }
+
+    function archive() {
+      setShoppingList((prevShoppingList) => {
+        let result = {...prevShoppingList, isArchived:true}
+        console.log(result);
+        return result;
+      });
+    }
     //@@viewOff:private
 
     //@@viewOn:render
-    const value = { shoppingList, remove, editItem, resolve, addItem };
+    const value = { shoppingList, remove, editItem, resolve, addItem,editTitle,archive };
     return typeof props.children === "function" ? props.children(value) : props.children;
     //@@viewOff:render
   },

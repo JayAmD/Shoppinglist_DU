@@ -2,6 +2,7 @@
 import { createVisualComponent, Utils, Content } from "uu5g05";
 import Config from "./config/config.js";
 import ItemCreate from "./item-create.js";
+import ShoppingListHeader from "./shopping-list-header.js";
 
 import ItemList from "./item-list.js";
 //@@viewOff:imports
@@ -47,6 +48,10 @@ const DetailView = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <div>
+          <ShoppingListHeader title={props.shoppingList.name}
+          onEditTitle={props.onEditTitle}
+          onArchive={props.onArchive}
+          />
         <ItemCreate onAddItem={props.onAddItem}/>
         <ItemList 
         shoppingListItemList ={props.shoppingList.itemList} 
@@ -54,7 +59,7 @@ const DetailView = createVisualComponent({
         onEdit={props.onEdit}
         onResolve={props.onResolve}
         />
-           {DetailView.uu5Tag}</div>
+        </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
     ) : null;
