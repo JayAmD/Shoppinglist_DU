@@ -55,8 +55,8 @@ const CreateForm = createVisualComponent({
       <Form {...elementProps} onSubmit={props.onSubmit} onValidate={handleValidate}>
         <Modal header="Create new shopping list" footer={formControls} open>
           <FormText label="Title" name="name" maxLength={255} className={Css.input()} required autoFocus />
-          <FormTextSelect name="itemList" label="Add multiple items" itemList={[]} insertable multiple />
-          <FormTextSelect name="memberIdList" label="Add members(IDs)" itemList={[]} insertable multiple />
+          <FormTextSelect name="itemList" label="Add multiple items" itemList={[]} required insertable multiple />
+          <FormTextSelect name="memberIdList" label="Add members(IDs)" itemList={[]} required insertable multiple />
         </Modal>
       </Form>
     );

@@ -1,7 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content } from "uu5g05";
 import Config from "./config/config.js";
-import { Dropdown, useAlertBus } from "uu5g05-elements";
+import { Dropdown, useAlertBus, Text, Link } from "uu5g05-elements";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -47,7 +47,7 @@ const NavBar = createVisualComponent({
 
     props.user.map((element) => {
       let result = {
-        children: element.firstname + " " + element.surname +" id:"+element.id,
+        children: element.firstname + " " + element.surname + " id:" + element.id,
         onClick: () => handleChangeUser(element.id),
       };
       itemList.push(result);
@@ -78,9 +78,22 @@ const NavBar = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <div>
-          <Dropdown label={props.logedUser.firstname + " " + props.logedUser.surname+" id:"+props.logedUser.id} itemList={itemList} />
+          <Text
+            className={Config.Css.css({ float: "left", margin: "10px" })}
+            category="story"
+            segment="heading"
+            type="h2"
+          >
+            <Link onClick={() => setRoute("home")}>Home</Link>
+          </Text>
+          <Dropdown
+            className={Config.Css.css({ float: "right", margin: "10px" })}
+            label={props.logedUser.firstname + " " + props.logedUser.surname + " id:" + props.logedUser.id}
+            itemList={itemList}
+          />
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
+        <div className={Config.Css.css({ clear: "both" })}></div>
       </div>
     ) : null;
     //@@viewOff:render

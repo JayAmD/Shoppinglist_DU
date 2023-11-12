@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useRoute } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Tiles from "uu5tilesg02";
 import { useAlertBus } from "uu5g05-elements";
@@ -24,6 +24,15 @@ const FILTER_LIST = [
     inputType: "bool",
   },
 ]
+
+const SORTER_LIST = [
+  {
+    key: "name",
+    label: "Name",
+    sort: (a, b) => a.name.localeCompare(b.name),
+  },
+
+];
 //@@viewOff:constants
 
 //@@viewOn:css
@@ -53,14 +62,17 @@ const View = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const [filterList, setFilterList] = useState([]);
-    
-    // const data = {}
-    // data.lists=props.shoppingListList
-    // data.logedUser=props.logedUser //prop pro Uu5Tiles.ControllerProvider musi byt Array, ne array v objecku
+    const [sorterList, setSorterList] = useState([]);
+    const [, setRoute] = useRoute();
 
+    
     function onFilterChange(e) {
       setFilterList(e.data.filterList);
     }
+    function onSorterChange(e) {
+      setSorterList(e.data.sorterList);
+    }
+
 
     const { addAlert } = useAlertBus();
 
@@ -105,17 +117,19 @@ const View = createVisualComponent({
              filterDefinitionList={FILTER_LIST}
             filterList={filterList}
             onFilterChange={onFilterChange}
-            // sorterDefinitionList={SORTER_LIST}
-            // sorterList={sorterList}
-            // onSorterChange={onSorterChange}
+            sorterDefinitionList={SORTER_LIST}
+            sorterList={sorterList}
+            onSorterChange={onSorterChange}
           >
-            <Uu5TilesControls.FilterButton />
-            {/* <Uu5TilesControls.SorterButton /> */}
             <Uu5TilesControls.SearchButton />
-            <Uu5TilesControls.FilterBar initialExpanded />
-            {/* <Uu5TilesControls.SorterBar initialExpanded /> */}
+            <Uu5TilesControls.FilterButton />
+            <Uu5TilesControls.SorterButton />
+
+            <Uu5TilesControls.FilterBar initialExpanded displayClearButton={false} displayManagerButton={false} displayCloseButton={false}
+ />
+            <Uu5TilesControls.SorterBar displayClearButton={false} displayManagerButton={false} displayCloseButton={false} />
             <Uu5TilesControls.Counter />
-            <Uu5TilesElements.Grid tileMinWidth={100} tileMaxWidth={200}>
+            <Uu5TilesElements.Grid tileMinWidth={150} tileMaxWidth={250}  >
               {<Tile logedUser={props.logedUser} onDeleteList={handleDeleteList} />}
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>

@@ -46,13 +46,14 @@ const Tile = createVisualComponent({
           })}
           footer={
             <div>
-              
-              {data.ownerId === props.logedUser.id ? (
-               <Button
-               className={Config.Css.css({
+               <Button className={Config.Css.css({
                  marginBottom: 4,
                  marginRight: 4,
-               })}
+               })} 
+               onClick={() => setRoute("detail",{ id: data.id })}>Open detail</Button>
+              {data.ownerId === props.logedUser.id ? (
+               <Button
+               
                colorScheme="red"
                onClick={() => setOpen(true)}
              >
@@ -61,7 +62,7 @@ const Tile = createVisualComponent({
               ) : (
                 ""
               )}
-              <Button onClick={() => setRoute("detail",{ id: data.id })}>Open detail</Button>
+             
             </div>
           }
         >
@@ -82,7 +83,7 @@ const Tile = createVisualComponent({
                   <Uu5Elements.Line />
                   {slicedArray.map((item) => (
                     <div key={item.id}>
-                      <Uu5Elements.Text>-{item.value}</Uu5Elements.Text>
+                      <Uu5Elements.Text>- {item.value}</Uu5Elements.Text>
                     </div>
                   ))}
                 </div>

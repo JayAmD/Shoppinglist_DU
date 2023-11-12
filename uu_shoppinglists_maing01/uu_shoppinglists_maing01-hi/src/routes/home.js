@@ -5,7 +5,6 @@ import Plus4U5Elements from "uu_plus4u5g02-elements";
 import { withRoute } from "uu_plus4u5g02-app";
 
 import Config from "./config/config.js";
-import RouteBar from "../core/route-bar.js";
 import ListProvider from "../bricks/shopping-list-list/list-provider.js";
 import View from "../bricks/shopping-list-list/view.js";
 import CreateView from "../bricks/shopping-list-list/create-view.js";
@@ -46,7 +45,6 @@ let Home = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props);
     return (
       <div {...attrs}>
-        <RouteBar />
         <ListProvider>
           
           {({shoppingListList,create,logedUser,switchLogedUser,user, onDeleteList }) => (

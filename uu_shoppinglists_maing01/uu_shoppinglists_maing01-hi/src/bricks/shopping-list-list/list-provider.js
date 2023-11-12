@@ -35,6 +35,7 @@ let initialShoppingListList = [
       },
     ],
   },
+  
   {
     id: "223ebf71c50ed33d7c03dda9", //generated unique code
     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
@@ -51,6 +52,116 @@ let initialShoppingListList = [
       {
         id: "61e8554617f0e248baf15f42", //generated unique code
         value: "Ferarry", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+      {
+        id: "91e1554617f0e248baf15f42", //generated unique code
+        value: "Porshe", // item value; length is limited to 1-255 characters
+        isResolved: true,
+      },
+      {
+        id: "64e1554617f0e248baf15f42", //generated unique code
+        value: "Mustang gtx", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+    ],
+  },
+  {
+    id: "33e1556d17f0e248baf15f4b", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    name: "Books", // shoppinglist name - mandatory; length is limited to 1-255 characters
+    isArchived: false,
+    ownerId: "11", //id of the owner
+    memberIdList: [ "33"], // array of member ids
+    itemList: [
+      {
+        id: "61e1554617f0e248baf15f42", //generated unique code
+        value: "GoT", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+      {
+        id: "91e1554617f0e248baf15f42", //generated unique code
+        value: "LoTR", // item value; length is limited to 1-255 characters
+        isResolved: true,
+      },
+      {
+        id: "64e1554617f0e248baf15f42", //generated unique code
+        value: "42", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+      {
+        id: "74e1554617f0e248baf15f42", //generated unique code
+        value: "Harry Poter", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+    ],
+  },
+  {
+    id: "44e1556d17f0e248baf15f4b", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    name: "Office Supplies", // shoppinglist name - mandatory; length is limited to 1-255 characters
+    isArchived: false,
+    ownerId: "33", //id of the owner
+    memberIdList: [ "11","22"], // array of member ids
+    itemList: [
+      {
+        id: "61e1554617f0e248baf15f42", //generated unique code
+        value: "4x Pencils", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+      {
+        id: "91e1554617f0e248baf15f42", //generated unique code
+        value: "A lot of A4s", // item value; length is limited to 1-255 characters
+        isResolved: true,
+      },
+      {
+        id: "64e1554617f0e248baf15f42", //generated unique code
+        value: "Chair", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+      {
+        id: "74e1554617f0e248baf15f42", //generated unique code
+        value: "Powerful PC", // item value; length is limited to 1-255 characters
+        isResolved: false,
+      },
+    ],
+  },
+  {
+    id: "55e1556d17f0e248baf15f4b", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    name: "Golf stuff", // shoppinglist name - mandatory; length is limited to 1-255 characters
+    isArchived: false,
+    ownerId: "22", //id of the owner
+    memberIdList: [ "33"], // array of member ids
+    itemList: [
+      {
+        id: "61e1554617f0e248baf15f42", //generated unique code
+        value: "Balls", // item value; length is limited to 1-255 characters
+        isResolved: true,
+      },
+      {
+        id: "91e1554617f0e248baf15f42", //generated unique code
+        value: "Car", // item value; length is limited to 1-255 characters
+        isResolved: true,
+      },
+      {
+        id: "64e1554617f0e248baf15f42", //generated unique code
+        value: "Green, yes the whole green", // item value; length is limited to 1-255 characters
         isResolved: false,
       },
     ],
@@ -117,16 +228,15 @@ const ListProvider = createComponent({
 
     useEffect(() => {
       setShoppingListList((prev) => {
-        // let workableListList =[]
-        // if(typeof prev === "undefined"){
-        //   workableListList=initialShoppingListList
-        // }
-        // else      { 
-        //   workableListList = [...initialShoppingListList]
-        //   prev.map(list=>workableListList.push(list))
-        //   }
-        // console.log(workableListList); //TODO pri vytvoreni listu se nepreda do seynamu listu pri prepnuti uzivatele, normalne by to resil server, s mockup daty na frontendu to je slozite
-        const filteredList = initialShoppingListList.filter((list) => {
+        let workableListList =[]
+        if(typeof prev === "undefined"){
+          workableListList=initialShoppingListList
+        }
+        else workableListList = [...prev,...initialShoppingListList]
+
+        let mergedArr = [...new Set(workableListList)]
+
+        const filteredList = mergedArr.filter((list) => {
           const isMember = list.memberIdList.includes(logedUser.id);
           return list.ownerId === logedUser.id || isMember;
         });
