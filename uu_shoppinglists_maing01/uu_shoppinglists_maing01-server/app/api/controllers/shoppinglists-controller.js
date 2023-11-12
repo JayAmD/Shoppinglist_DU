@@ -42,7 +42,7 @@ class ShoppinglistController {
   itemAdd(ucEnv) {
     let dtoIn = ucEnv.getDtoIn();
 
-    return ShoppinglistAbl.creitemAddate(dtoIn);
+    return ShoppinglistAbl.itemAdd(dtoIn);
   }
 
   itemUpdate(ucEnv) {
@@ -51,10 +51,10 @@ class ShoppinglistController {
     return ShoppinglistAbl.itemUpdate(dtoIn);
   }
 
-  itemDelte(ucEnv) {
+  itemDelete(ucEnv) {
     let dtoIn = ucEnv.getDtoIn();
 
-    return ShoppinglistAbl.itemDelte(dtoIn);
+    return ShoppinglistAbl.itemDelete(dtoIn);
   }
 }
 

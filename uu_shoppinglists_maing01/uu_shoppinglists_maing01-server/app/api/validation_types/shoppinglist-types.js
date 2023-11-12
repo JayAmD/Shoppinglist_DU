@@ -41,7 +41,7 @@ const shoppinglistItemUpdateDtoInType = shape({
     id: id().isRequired(),
     value: string(255),
     isResolved: boolean(),
-  }),
+  }).isRequired(),
 });
 
 const shoppinglistItemDeleteDtoInType = shape({

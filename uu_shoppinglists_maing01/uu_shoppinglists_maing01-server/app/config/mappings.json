@@ -41,6 +41,11 @@
           "httpMethod": "GET",
           "type": "CMD"
         },
+        "shoppinglist/update":{
+          "realization": "api/controllers/ShoppinglistsController.update",
+          "httpMethod": "POST",
+          "type": "CMD"
+        },
         "shoppinglist/leave":{
           "realization": "api/controllers/ShoppinglistsController.leave",
           "httpMethod": "POST",
