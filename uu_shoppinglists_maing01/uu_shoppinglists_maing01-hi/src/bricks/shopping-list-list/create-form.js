@@ -56,7 +56,7 @@ const CreateForm = createVisualComponent({
         <Modal header="Create new shopping list" footer={formControls} open>
           <FormText label="Title" name="name" maxLength={255} className={Css.input()} required autoFocus />
           <FormTextSelect name="itemList" label="Add multiple items" itemList={[]} insertable multiple />
-          <FormTextSelect name="memberIdList" label="Add members" itemList={[]} insertable multiple />
+          <FormTextSelect name="memberIdList" label="Add members(IDs)" itemList={[]} insertable multiple />
         </Modal>
       </Form>
     );

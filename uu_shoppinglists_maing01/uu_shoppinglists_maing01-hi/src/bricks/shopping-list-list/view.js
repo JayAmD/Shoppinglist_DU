@@ -110,10 +110,10 @@ const View = createVisualComponent({
             // onSorterChange={onSorterChange}
           >
             <Uu5TilesControls.FilterButton />
-            <Uu5TilesControls.SorterButton />
+            {/* <Uu5TilesControls.SorterButton /> */}
             <Uu5TilesControls.SearchButton />
             <Uu5TilesControls.FilterBar initialExpanded />
-            <Uu5TilesControls.SorterBar initialExpanded />
+            {/* <Uu5TilesControls.SorterBar initialExpanded /> */}
             <Uu5TilesControls.Counter />
             <Uu5TilesElements.Grid tileMinWidth={100} tileMaxWidth={200}>
               {<Tile logedUser={props.logedUser} onDeleteList={handleDeleteList} />}

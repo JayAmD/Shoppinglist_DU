@@ -61,7 +61,7 @@ const Tile = createVisualComponent({
               ) : (
                 ""
               )}
-              <Button onClick={() => setRoute("detail?id=" + data.id)}>Detail</Button>
+              <Button onClick={() => setRoute("detail",{ id: data.id })}>Open detail</Button>
             </div>
           }
         >

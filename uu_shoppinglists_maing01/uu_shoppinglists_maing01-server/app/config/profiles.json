@@ -25,6 +25,43 @@
       "sys/uuAppWorkspace/initUve": {
         "sysStateList": ["created"],
         "profileList": ["Public", "AwidLicenseOwner"]
+      },
+     
+      "shoppinglist/create":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/get":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/list":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/update":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/leave":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/delete":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/item/add":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      }, 
+      "shoppinglist/item/update":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      }, 
+      "shoppinglist/item/delete":{
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
       }
     }
   }

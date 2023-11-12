@@ -47,7 +47,7 @@ const NavBar = createVisualComponent({
 
     props.user.map((element) => {
       let result = {
-        children: element.firstname + " " + element.surname,
+        children: element.firstname + " " + element.surname +" id:"+element.id,
         onClick: () => handleChangeUser(element.id),
       };
       itemList.push(result);
@@ -78,7 +78,7 @@ const NavBar = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <div>
-          <Dropdown label={props.logedUser.firstname + " " + props.logedUser.surname} itemList={itemList} />
+          <Dropdown label={props.logedUser.firstname + " " + props.logedUser.surname+" id:"+props.logedUser.id} itemList={itemList} />
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

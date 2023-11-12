@@ -9,7 +9,7 @@ import Config from "./config/config.js";
 
 let initialShoppingListList = [
   {
-    id: "61e1556d17f0e248baf15f4b", //generated unique code
+    id: "11e1556d17f0e248baf15f4b", //generated unique code
     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
     sys: {
       cts: "2022-01-14 10:50:21.637Z", //create timestamp
@@ -18,8 +18,8 @@ let initialShoppingListList = [
     },
     name: "Groceries", // shoppinglist name - mandatory; length is limited to 1-255 characters
     isArchived: false,
-    ownerId: "543ebf71c50ed33d7c03dda9", //id of the owner
-    memberIdList: ["61e1554617f0e248baf15f42"], // array of member ids
+    ownerId: "1100-522-7322-0000", //id of the owner
+    memberIdList: ["2200-522-7322-0000", "3300-522-7322-0000"], // array of member ids
     itemList: [
       {
         id: "61e1554617f0e248baf15f42", //generated unique code
@@ -39,7 +39,7 @@ let initialShoppingListList = [
     ],
   },
   {
-    id: "67e1556d17f0e248baf15f4b", //generated unique code
+    id: "223ebf71c50ed33d7c03dda9", //generated unique code
     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
     sys: {
       cts: "2022-01-14 10:50:21.637Z", //create timestamp
@@ -47,9 +47,9 @@ let initialShoppingListList = [
       rev: 0, //revision number
     },
     name: "Cars", // shoppinglist name - mandatory; length is limited to 1-255 characters
-    isArchived: false,
-    ownerId: "593ebf71c50ed33d7c03dda9", //id of the owner
-    memberIdList: ["61e1554617f0e248baf15f42"], // array of member ids
+    isArchived: true,
+    ownerId: "2200-522-7322-0000", //id of the owner
+    memberIdList: ["1100-522-7322-0000"], // array of member ids
     itemList: [
       {
         id: "61e8554617f0e248baf15f42", //generated unique code
@@ -62,39 +62,39 @@ let initialShoppingListList = [
 
 let user = [
   {
-  id: "1100-522-7322-0000", //generated unique code
-  awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-  sys: {
-    cts: "2022-01-14 10:50:21.637Z", //create timestamp
-    mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-    rev: 0 //revision number
+    id: "1100-522-7322-0000", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    firstname: "Petr",
+    surname: "Novák",
   },
-  firstname: "Petr",
-  surname: "Novák"
-},
-{
-  id: "2200-522-7322-0000", //generated unique code
-  awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-  sys: {
-    cts: "2022-01-14 10:50:21.637Z", //create timestamp
-    mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-    rev: 0 //revision number
+  {
+    id: "2200-522-7322-0000", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    firstname: "Jan",
+    surname: "Zima",
   },
-  firstname: "Jan",
-  surname: "Zima"
-},
-{
-  id: "3300-522-7322-0000", //generated unique code
-  awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-  sys: {
-    cts: "2022-01-14 10:50:21.637Z", //create timestamp
-    mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-    rev: 0 //revision number
+  {
+    id: "3300-522-7322-0000", //generated unique code
+    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+    sys: {
+      cts: "2022-01-14 10:50:21.637Z", //create timestamp
+      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+      rev: 0, //revision number
+    },
+    firstname: "Vojtech",
+    surname: "Palacinka",
   },
-  firstname: "Vojtech",
-  surname: "Palacinka"
-},
-]
+];
 //@@viewOff:constants
 
 //@@viewOn:helpers
@@ -116,10 +116,10 @@ const DataProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const [route, setRoute] = useRoute();
-    let currentList = initialShoppingListList.find((element)=>element.id ===route.params.id)
+    let currentList = initialShoppingListList.find((element)=> element.id ===route.params.id)
 {console.log(currentList);}//TODO nefunkcni prechod na route s parametry
 
-    const [shoppingList, setShoppingList] = useState(initialShoppingListList[0]);
+    const [shoppingList, setShoppingList] = useState(currentList);
     const [logedUser, setLogedUser] = useState(user[0]);
 
     
