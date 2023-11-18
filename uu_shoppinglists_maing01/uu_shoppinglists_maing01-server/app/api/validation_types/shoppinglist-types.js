@@ -9,10 +9,12 @@ const shoppinglistGetDtoInType = shape({
 });
 
 const shoppinglistListDtoInType = shape({
+  sortBy: oneOf(["name"]),
+  order: oneOf(["asc", "desc"]),
   pageInfo: shape({
-    pageIndex: number(0).isRequired(),
-    pageSize: number(0).isRequired(),
-  }).isRequired(),
+    pageIndex: integer(),
+    pageSize: integer(),
+  })
 });
 
 const shoppinglistUpdateDtoInType = shape({

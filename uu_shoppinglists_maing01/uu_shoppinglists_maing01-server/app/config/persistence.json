@@ -6,6 +6,10 @@
       "schemaMap": {
         "shoppinglistsMain": {
           "realization": "dao/ShoppinglistsMainMongo"
+        },
+        "shoppinglist": {
+          "realization": "dao/ShoppinglistMongo",
+          "maxNoi": 1000
         }
       }
     }

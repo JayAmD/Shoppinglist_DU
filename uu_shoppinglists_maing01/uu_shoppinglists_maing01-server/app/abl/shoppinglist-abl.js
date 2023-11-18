@@ -74,7 +74,7 @@ class shoppinglistAbl {
     return dtoOut;
   }
 
-  list(dtoIn) {
+  list(dtoIn) {  //Obsolite
     let validationResult = this.validator.validate("shoppinglistListDtoInType", dtoIn);
     let uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,

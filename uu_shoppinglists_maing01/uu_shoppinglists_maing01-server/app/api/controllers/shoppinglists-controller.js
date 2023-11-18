@@ -1,6 +1,8 @@
 "use strict";
 
 const ShoppinglistAbl = require("../../abl/shoppinglist-abl");
+const ListAbl = require("../../abl/shoppinglist/list-abl")
+
 
 class ShoppinglistController {
   create(ucEnv) {
@@ -15,10 +17,9 @@ class ShoppinglistController {
     return ShoppinglistAbl.get(dtoIn);
   }
 
-  list(ucEnv) {
-    let dtoIn = ucEnv.getDtoIn();
+   list(ucEnv) {
 
-    return ShoppinglistAbl.list(dtoIn);
+    return ListAbl.list(ucEnv.getUri().getAwid(), ucEnv.parameters, ucEnv.getAuthorizationResult());
   }
 
   update(ucEnv) {
