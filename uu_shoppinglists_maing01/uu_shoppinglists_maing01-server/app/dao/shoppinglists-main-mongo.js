@@ -10,6 +10,11 @@ class ShoppinglistsMainMongo extends UuObjectDao {
     return await super.insertOne(uuObject);
   }
 
+  async getByAwid(awid) {
+    return await super.findOne({ awid });
+  }
+  //Vse nahore koresponduje se study materials
+
   async get(awid, id) {
     let filter = {
       awid: awid,

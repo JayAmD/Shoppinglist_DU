@@ -1,8 +1,10 @@
 "use strict";
 const ShoppinglistsMainUseCaseError = require("./shoppinglists-main-use-case-error.js");
 
+const SHOPPINGLISTS_MAIN_ERROR_PREFIX = `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglistsMain/`;
+
 const Init = {
-  UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}init/`,
+  UC_CODE: `${SHOPPINGLISTS_MAIN_ERROR_PREFIX}init/`,
 
   InvalidDtoIn: class extends ShoppinglistsMainUseCaseError {
     constructor() {
@@ -35,9 +37,29 @@ const Init = {
       this.code = `${Init.UC_CODE}createAwscFailed`;
       this.message = "Create uuAwsc failed.";
     }
+  }, //Tento error je mozna obsolite, kdyztak smaz
+
+  ShoppinglistsDaoCreateFailed: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Init.UC_CODE}shoppinglistsDaoCreateFailed`;
+      this.message = "Create shoppinglists by DAO method failed.";
+    }
   },
 };
 
+const Load = {
+  UC_CODE: `${SHOPPINGLISTS_MAIN_ERROR_PREFIX}load/`,
+
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Load.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
+    }
+  },
+};
 module.exports = {
   Init,
+  Load
 };

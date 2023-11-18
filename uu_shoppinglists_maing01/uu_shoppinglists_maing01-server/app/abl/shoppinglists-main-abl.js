@@ -7,6 +7,7 @@ const { UriBuilder } = require("uu_appg01_server").Uri;
 const { LoggerFactory } = require("uu_appg01_server").Logging;
 const { AppClient } = require("uu_appg01_server");
 const Errors = require("../api/errors/shoppinglists-main-error.js");
+const { Schemas, Shoppinglists, Profiles } = require("./constants");
 
 const WARNINGS = {
   initUnsupportedKeys: {
@@ -14,119 +15,122 @@ const WARNINGS = {
   },
 };
 
+const DEFAULT_NAME = "jjShoppinglists";
 const logger = LoggerFactory.get("ShoppinglistsMainAbl");
 
 class ShoppinglistsMainAbl {
   constructor() {
     this.validator = Validator.load();
+    this.dao = DaoFactory.getDao(Schemas.SHOPPINGLISTS_MAIN);
+
   }
 
-  async init(uri, dtoIn, session) {
+  async init(uri, dtoIn) {
     const awid = uri.getAwid();
-    // HDS 1
-    let validationResult = this.validator.validate("initDtoInType", dtoIn);
-    // A1, A2
-    let uuAppErrorMap = ValidationHelper.processValidationResult(
+    let uuAppErrorMap = {};
+
+    // hds 1
+    const validationResult = this.validator.validate("initDtoInType", dtoIn);
+    uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       WARNINGS.initUnsupportedKeys.code,
       Errors.Init.InvalidDtoIn
     );
 
-    // HDS 2
-    const schemas = ["shoppinglistsMain"];
-    let schemaCreateResults = schemas.map(async (schema) => {
-      try {
-        return await DaoFactory.getDao(schema).createSchema();
-      } catch (e) {
-        // A3
-        throw new Errors.Init.SchemaDaoCreateSchemaFailed({ uuAppErrorMap }, { schema }, e);
-      }
-    });
-    await Promise.all(schemaCreateResults);
+    // 1.4
+    dtoIn.state = dtoIn.state || Shoppinglists.States.UNDER_CONSTRUCTION;
+    dtoIn.name = dtoIn.name || DEFAULT_NAME;
 
-    if (dtoIn.uuBtLocationUri) {
-      const baseUri = uri.getBaseUri();
-      const uuBtUriBuilder = UriBuilder.parse(dtoIn.uuBtLocationUri);
-      const location = uuBtUriBuilder.getParameters().id;
-      const uuBtBaseUri = uuBtUriBuilder.toUri().getBaseUri();
+    // hds 2
+    const promises = Object.values(Schemas).map(async (schema) => DaoFactory.getDao(schema).createSchema());
+    try {
+      await Promise.all(promises);
+    } catch (e) {
+      throw new Errors.Init.SchemaDaoCreateSchemaFailed({ uuAppErrorMap }, e);
+    }
 
-      const createAwscDtoIn = {
-        name: "UuShoppinglists",
-        typeCode: "uu-shoppinglists-maing01",
-        location: location,
-        uuAppWorkspaceUri: baseUri,
-      };
-
-      const awscCreateUri = uuBtUriBuilder.setUseCase("uuAwsc/create").toUri();
-      const appClientToken = await AppClientTokenService.createToken(uri, uuBtBaseUri);
-      const callOpts = AppClientTokenService.setToken({ session }, appClientToken);
-
-      // TODO HDS
-      let awscId;
-      try {
-        const awscDtoOut = await AppClient.post(awscCreateUri, createAwscDtoIn, callOpts);
-        awscId = awscDtoOut.id;
-      } catch (e) {
-        if (e.code.includes("applicationIsAlreadyConnected") && e.paramMap.id) {
-          logger.warn(`Awsc already exists id=${e.paramMap.id}.`, e);
-          awscId = e.paramMap.id;
-        } else {
-          throw new Errors.Init.CreateAwscFailed({ uuAppErrorMap }, { location: dtoIn.uuBtLocationUri }, e);
-        }
-      }
-
-      const artifactUri = uuBtUriBuilder.setUseCase(null).clearParameters().setParameter("id", awscId).toUri();
-
-      await UuAppWorkspace.connectArtifact(
-        baseUri,
-        {
-          artifactUri: artifactUri.toString(),
-          synchronizeArtifactBasicAttributes: false,
-        },
-        session
+    // hds 3
+    try {
+      await Profile.set(awid, Profiles.AUTHORITIES, dtoIn.uuAppProfileAuthorities);
+    } catch (e) {
+      throw new Errors.Init.SetProfileFailed(
+        { uuAppErrorMap },
+        { uuAppProfileAuthorities: dtoIn.uuAppProfileAuthorities },
+        e
       );
     }
 
-    // HDS 3
-    if (dtoIn.uuAppProfileAuthorities) {
-      try {
-        await Profile.set(awid, "Authorities", dtoIn.uuAppProfileAuthorities);
-      } catch (e) {
-        if (e instanceof UuAppWorkspaceError) {
-          // A4
-          throw new Errors.Init.SysSetProfileFailed({ uuAppErrorMap }, { role: dtoIn.uuAppProfileAuthorities }, e);
-        }
-        throw e;
-      }
+    // hds 4
+    const uuObject = {
+      awid,
+      state: dtoIn.uuBtLocationUri ? Shoppinglists.States.INIT : dtoIn.state,
+      name: dtoIn.name,
+    };
+
+    let shoppinglistsMain;
+    try {
+      shoppinglistsMain = await this.dao.create(uuObject);
+    } catch (e) {
+      throw new Errors.Init.ShoppinglistsDaoCreateFailed({ uuAppErrorMap }, e);
     }
 
-    // HDS 4 - HDS N
-    // TODO Implement according to application needs...
-
-    // HDS N+1
-    const workspace = UuAppWorkspace.get(awid);
-
-    return {
-      ...workspace,
-      uuAppErrorMap: uuAppErrorMap,
-    };
+    // hds 5
+    return { shoppinglistsMain, uuAppErrorMap };
   }
 
   async load(uri, session, uuAppErrorMap = {}) {
-    // HDS 1
-    const dtoOut = await UuAppWorkspace.load(uri, session, uuAppErrorMap);
+    let awid = uri.getAwid();
+    let dtoOut = {};
 
-    // TODO Implement according to application needs...
-    // if (dtoOut.sysData.awidData.sysState !== UuAppWorkspace.SYS_STATES.CREATED &&
-    //    dtoOut.sysData.awidData.sysState !== UuAppWorkspace.SYS_STATES.ASSIGNED
-    // ) {
-    //   const awid = uri.getAwid();
-    //   const appData = await this.dao.get(awid);
-    //   dtoOut.data = { ...appData, relatedObjectsMap: {} };
-    // }
+    // hds 1
+    const asidData = await UuSubAppInstance.get();
 
-    // HDS 2
+    // hds 2
+    const awidData = await UuAppWorkspace.get(awid);
+
+    // hds 3
+    const relatedObjectsMap = {
+      uuAppUuFlsBaseUri: Config.get("fls_base_uri"),
+      uuAppUuSlsBaseUri: Config.get("sls_base_uri"),
+      uuAppBusinessRequestsUri: Config.get("business_request_uri"),
+      uuAppBusinessModelUri: Config.get("business_model_uri"),
+      uuAppApplicationModelUri: Config.get("application_model_uri"),
+      uuAppUserGuideUri: Config.get("user_guide_uri"),
+      uuAppWebKitUri: Config.get("web_uri"),
+      uuAppProductPortalUri: Config.get("product_portal_uri"),
+    };
+
+    // hds 4
+    const cmdUri = UriBuilder.parse(uri).setUseCase("sys/uuAppWorkspace/load").clearParameters();
+    const authorizationResult = await WorkspaceAuthorizationService.authorize(session, cmdUri.toUri());
+
+    const profileData = {
+      uuIdentityProfileList: authorizationResult.getIdentityProfiles(),
+      profileList: authorizationResult.getAuthorizedProfiles(),
+    };
+
+    // hds 5
+    dtoOut.sysData = { asidData, awidData, relatedObjectsMap, profileData };
+
+    // hds 6, 6.A
+    if (awidData.sysState !== "created") {
+      // hds 6.A.1
+      let shoppinglistsMain;
+      try {
+        shoppinglistsMain = await this.dao.getByAwid(awid);
+      } catch (e) {
+        throw new Errors.Load.ShoppinglistsMainDoesNotExist({ uuAppErrorMap }, { awid }, e);
+      }
+
+      // hds 6.A.2
+      dtoOut.data = { ...shoppinglistsMain, relatedObjectsMap: {} };
+
+      
+    }
+
+    // hds 7
+    dtoOut.uuAppErrorMap = uuAppErrorMap;
     return dtoOut;
   }
 
