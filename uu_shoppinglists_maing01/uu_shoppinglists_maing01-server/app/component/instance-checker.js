@@ -6,7 +6,7 @@ const { Schemas } = require("../abl/constants");
 //@@viewOn:components
 class InstanceChecker {
   constructor() {
-    this.dao = DaoFactory.getDao(Schemas.SHOPPINGLIST);
+    this.dao = DaoFactory.getDao(Schemas.SHOPPINGLISTS_MAIN);
   }
 
   /**
@@ -28,7 +28,7 @@ class InstanceChecker {
 
     // // HDS 3
     // if (!allowedStates.has(shoppinglists.state)) {
-    //   throw new errors.ShoppinglistsNotInCorrectState(
+    //   throw new errors.ShoppinglistsMainNotInCorrectState(
     //     { uuAppErrorMap },
     //     {
     //       awid,
@@ -50,12 +50,12 @@ class InstanceChecker {
    */
   async ensureInstance(awid, errors, uuAppErrorMap) {
     // HDS 1
-    let shoppinglists = await this.dao.getByAwid(awid);
+    let shoppinglists = await this.dao.getByAwid(awid);//TODO Add document to Mongo collection SHOPPINGLISTS_MAIN with awid 22...
 
     // HDS 2
     if (!shoppinglists) {
       // 2.1.A
-      throw new errors.ShoppinglistsDoesNotExist({ uuAppErrorMap }, { awid });
+      throw new errors.ShoppinglistsMainDoesNotExist({ uuAppErrorMap }, { awid });
     }
 
     return shoppinglists;

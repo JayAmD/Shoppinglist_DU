@@ -13,58 +13,194 @@ const List = {
       this.message = `DtoIn is not valid.`;
     }
   },
-  ShoppinglistsDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
     constructor() {
       super(...arguments);
-      this.code = `${List.UC_CODE}shoppinglistsDoesNotExist`;
-      this.message = "UuObject shoppinglists does not exist.";
+      this.code = `${List.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
     }
   },
-  ShoppinglistsNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
+  ShoppinglistsMainNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
     constructor() {
       super(...arguments);
-      this.code = `${List.UC_CODE}shoppinglistsNotInCorrectState`;
-      this.message = "UuObject shoppinglists is not in correct state.";
-    }
-  },
-};
-//Old ones down from here
-
-const Create = {
-  UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/create`,
-
-  invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
-    constructor() {
-      super(...arguments);
-      this.code = `${Create.UC_CODE}/invalidDtoIn`;
-      this.message = `DtoIn is not valid.`;
+      this.code = `${List.UC_CODE}shoppinglistsMainNotInCorrectState`;
+      this.message = "UuObject shoppinglistsMain is not in correct state.";
     }
   },
 };
 
 const Get = {
-    UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/get`,
+  UC_CODE: `${SHOPPINGLIST_ERROR_PREFIX}/get`,
+
+  invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Get.UC_CODE}invalidDtoIn`;
+      this.message = `DtoIn is not valid.`;
+    }
+  },
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Get.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
+    }
+  },
+  ShoppinglistsMainNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Get.UC_CODE}shoppinglistsMainNotInCorrectState`;
+      this.message = "UuObject shoppinglistsMain is not in correct state.";
+    }
+  },
+  ShoppinglistDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Get.UC_CODE}shoppinglistDoesNotExist`;
+      this.message = "Shoppinglist does not exist.";
+    }
+  }
+}
+
+const Create = {
+  UC_CODE: `${SHOPPINGLIST_ERROR_PREFIX}/create`,
+
+  invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Create.UC_CODE}invalidDtoIn`;
+      this.message = `DtoIn is not valid.`;
+    }
+  },
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Create.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
+    }
+  },
+  ShoppinglistsMainNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Create.UC_CODE}shoppinglistsMainNotInCorrectState`;
+      this.message = "UuObject shoppinglistsMain is not in correct state.";
+    }
+  },
+  InvalidName: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Create.UC_CODE}invalidName`;
+      this.message = "Invalid name - it cannot have no characters or be of zero length.";
+    }
+  },
   
-    invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
-      constructor() {
-        super(...arguments);
-        this.code = `${Get.UC_CODE}/invalidDtoIn`;
-        this.message = `DtoIn is not valid.`;
-      }
-    },
-  };
+  ShoppinglistDaoCreateFailed: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Create.UC_CODE}shoppinglistDaoCreateFailed`;
+      this.message = "Create shoppinglist by shoppinglist DAO create failed.";
+    }
+  },
+}
+
+const Update = {
+  UC_CODE: `${SHOPPINGLIST_ERROR_PREFIX}/update`,
+
+  invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}invalidDtoIn`;
+      this.message = `DtoIn is not valid.`;
+    }
+  },
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
+    }
+  },
+  ShoppinglistsMainNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}shoppinglistsMainNotInCorrectState`;
+      this.message = "UuObject shoppinglistsMain is not in correct state.";
+    }
+  },
+  InvalidName: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}invalidName`;
+      this.message = "Invalid name - it cannot have no characters or be of zero length.";
+    }
+  },
+  ShoppinglistDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}shoppinglistDoesNotExist`;
+      this.message = "Shoppinglist does not exist.";
+    }
+  },
+  UserNotAuthorized: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}userNotAuthorized`;
+      this.message = "User not authorized.";
+    }
+  },
+  ShoppinglistDaoUpdateFailed: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Update.UC_CODE}shoppinglistDaoUpdateFailed`;
+      this.message = "Update shoppinglist by shoppinglist DAO update failed.";
+    }
+  },
+}
+
+const Delete = {
+  UC_CODE: `${SHOPPINGLIST_ERROR_PREFIX}/delete`,
+
+  invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}invalidDtoIn`;
+      this.message = `DtoIn is not valid.`;
+    }
+  },
+  ShoppinglistsMainDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}shoppinglistsMainDoesNotExist`;
+      this.message = "UuObject shoppinglistsMain does not exist.";
+    }
+  },
+  ShoppinglistsMainNotInCorrectState: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}shoppinglistsMainNotInCorrectState`;
+      this.message = "UuObject shoppinglistsMain is not in correct state.";
+    }
+  },
+  ShoppinglistDoesNotExist: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}shoppinglistDoesNotExist`;
+      this.message = "Shoppinglist does not exist.";
+    }
+  },
+  UserNotAuthorized: class extends ShoppinglistsMainUseCaseError {
+    constructor() {
+      super(...arguments);
+      this.code = `${Delete.UC_CODE}userNotAuthorized`;
+      this.message = "User not authorized.";
+    }
+  },
+}
+//Old ones down from here
+
+
  
-  const Update = {
-    UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/update`,
   
-    invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
-      constructor() {
-        super(...arguments);
-        this.code = `${Update.UC_CODE}/invalidDtoIn`;
-        this.message = `DtoIn is not valid.`;
-      }
-    },
-  };
   const Leave = {
     UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/leave`,
   
@@ -76,17 +212,7 @@ const Get = {
       }
     },
   };
-  const Delete = {
-    UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/delete`,
   
-    invalidDtoIn: class extends ShoppinglistsMainUseCaseError {
-      constructor() {
-        super(...arguments);
-        this.code = `${Delete.UC_CODE}/invalidDtoIn`;
-        this.message = `DtoIn is not valid.`;
-      }
-    },
-  };
   const ItemAdd = {
     UC_CODE: `${ShoppinglistsMainUseCaseError.ERROR_PREFIX}shoppinglist/itemAdd`,
   

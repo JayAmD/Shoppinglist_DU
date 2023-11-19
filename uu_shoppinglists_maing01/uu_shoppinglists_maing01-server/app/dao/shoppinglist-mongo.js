@@ -8,26 +8,39 @@ class ShoppinglistMongo extends UuObjectDao {
   }
 
   async createSchema() {//TODO EDIT/update
-    await super.createIndex({ awid: 1, _id: 1 }, { unique: true });
+    await super.createIndex({ awid: 1, _id: 1, "itemList._id": 1 }, { unique: true });
     await super.createIndex({ awid: 1, name: 1 });//TODO ADD TO DOCUMENTION
   }
 
-  //getByAwid
-
-  async getByAwid(awid) {
-    return await super.findOne({ awid });
-  }
   
   // create DAO method
   
+  async create(uuObject) {
+    
+    return await super.insertOne(uuObject);
+  }
+
   // get DAO method
+  
+  async get(awid, id) {
+    return await super.findOne({ id, awid });
+  }
   
   // getByName DAO method
   
   // update DAO method
   
+  async update(uuObject) {
+    let filter = { id: uuObject.id, awid: uuObject.awid };
+    return await super.findOneAndUpdate(filter, uuObject, "NONE");
+  }
+
   // delete DAO method
   
+  async delete(awid, id) {
+    await super.deleteOne({ awid, id });
+  }
+    
   // list DAO method
   
   async list(awid, sortBy, order, pageInfo) {

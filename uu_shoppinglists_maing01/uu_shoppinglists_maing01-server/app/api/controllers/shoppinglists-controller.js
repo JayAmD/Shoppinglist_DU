@@ -2,19 +2,21 @@
 
 const ShoppinglistAbl = require("../../abl/shoppinglist-abl");
 const ListAbl = require("../../abl/shoppinglist/list-abl")
+const GetAbl = require("../../abl/shoppinglist/get-abl")
+const CreateAbl = require("../../abl/shoppinglist/create-abl")
+const UpdateAbl = require("../../abl/shoppinglist/update-abl")
+const DeleteAbl = require("../../abl/shoppinglist/delete-abl")
 
 
 class ShoppinglistController {
   create(ucEnv) {
-    let dtoIn = ucEnv.getDtoIn();
+    return CreateAbl.create(ucEnv.getUri().getAwid(), ucEnv.parameters, ucEnv.session, ucEnv.getAuthorizationResult());
 
-    return ShoppinglistAbl.create(dtoIn);
   }
 
   get(ucEnv) {
-    let dtoIn = ucEnv.getDtoIn();
+    return GetAbl.get(ucEnv.getUri().getAwid(), ucEnv.parameters, ucEnv.getAuthorizationResult());
 
-    return ShoppinglistAbl.get(dtoIn);
   }
 
    list(ucEnv) {
@@ -23,9 +25,8 @@ class ShoppinglistController {
   }
 
   update(ucEnv) {
-    let dtoIn = ucEnv.getDtoIn();
+    return UpdateAbl.update(ucEnv.getUri().getAwid(), ucEnv.parameters, ucEnv.session, ucEnv.getAuthorizationResult());
 
-    return ShoppinglistAbl.update(dtoIn);
   }
 
   leave(ucEnv) {
@@ -35,9 +36,8 @@ class ShoppinglistController {
   }
 
   delete(ucEnv) {
-    let dtoIn = ucEnv.getDtoIn();
+    return DeleteAbl.delete(ucEnv.getUri().getAwid(), ucEnv.parameters, ucEnv.session, ucEnv.getAuthorizationResult());
 
-    return ShoppinglistAbl.delete(dtoIn);
   }
 
   itemAdd(ucEnv) {
