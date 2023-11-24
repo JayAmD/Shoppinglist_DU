@@ -8,9 +8,9 @@ class ShoppinglistMongo extends UuObjectDao {
   }
 
   async createSchema() {
-    //TODO EDIT/update
+    await super.createIndex({ awid: 1, ownerId:1, memberIdList:1}, { unique: false });
     await super.createIndex({ awid: 1, _id: 1, "itemList.id": 1 }, { unique: true });
-    await super.createIndex({ awid: 1, ownerId:1, memberIdList:1});//TODO pridat do dokumentace tento index
+
   }
 
   // create DAO method

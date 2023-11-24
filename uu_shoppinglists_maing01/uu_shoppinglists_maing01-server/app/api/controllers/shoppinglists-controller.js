@@ -1,6 +1,5 @@
 "use strict";
 
-const ShoppinglistAbl = require("../../abl/shoppinglist-abl");
 const ListAbl = require("../../abl/shoppinglist/list-abl");
 const GetAbl = require("../../abl/shoppinglist/get-abl");
 const CreateAbl = require("../../abl/shoppinglist/create-abl");

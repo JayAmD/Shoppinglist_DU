@@ -50,16 +50,7 @@ class ShoppinglistsMainAbl {
       throw new Errors.Init.SchemaDaoCreateSchemaFailed({ uuAppErrorMap }, e);
     }
 
-    // hds 3
-    try {
-      await Profile.set(awid, Profiles.AUTHORITIES, dtoIn.uuAppProfileAuthorities);
-    } catch (e) {
-      throw new Errors.Init.SetProfileFailed(
-        { uuAppErrorMap },
-        { uuAppProfileAuthorities: dtoIn.uuAppProfileAuthorities },
-        e
-      );
-    }
+    
 
     // hds 4
     const uuObject = {

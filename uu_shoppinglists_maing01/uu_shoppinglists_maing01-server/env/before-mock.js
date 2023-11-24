@@ -1,6 +1,5 @@
-// if you don't use the default awid, change that everywhere aswell
-db.createCollection("shoppinglist");
-db.shoppinglist.insertMany({
+
+db.shoppinglist.insertMany([{
   _id: ObjectId("11e1556d17f0e248baf15f4b"),
   awid: "22222222222222222222222222222222", //appWorkspaceId - unique code specified externally
   sys: {
@@ -14,17 +13,17 @@ db.shoppinglist.insertMany({
   memberIdList: ["22", "33"], // array of member ids
   itemList: [
     {
-      id: "61e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("61e1554617f0e248baf15f42"), //generated unique code
       value: "potatos", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
     {
-      id: "91e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("91e1554617f0e248baf15f42"), //generated unique code
       value: "carrot", // item value; length is limited to 1-255 characters
       isResolved: true,
     },
     {
-      id: "64e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("64e1554617f0e248baf15f42"), //generated unique code
       value: "salt", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
@@ -44,24 +43,24 @@ db.shoppinglist.insertMany({
   memberIdList: ["11"], // array of member ids
   itemList: [
     {
-      id: "61e8554617f0e248baf15f42", //generated unique code
+      id: ObjectId("61e8554617f0e248baf15f42"), //generated unique code
       value: "Ferarry", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
     {
-      id: "91e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("91e1554617f0e248baf15f42"), //generated unique code
       value: "Porshe", // item value; length is limited to 1-255 characters
       isResolved: true,
     },
     {
-      id: "64e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("64e1554617f0e248baf15f42"), //generated unique code
       value: "Mustang gtx", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
   ],
 },
 {
-  id: "33e1556d17f0e248baf15f4b", //generated unique code
+  id: ObjectId("33e1556d17f0e248baf15f4b"), //generated unique code
   awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
   sys: {
     cts: "2022-01-14 10:50:21.637Z", //create timestamp
@@ -74,26 +73,26 @@ db.shoppinglist.insertMany({
   memberIdList: [ "33"], // array of member ids
   itemList: [
     {
-      id: "61e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("61e1554617f0e248baf15f42"), //generated unique code
       value: "GoT", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
     {
-      id: "91e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("91e1554617f0e248baf15f42"), //generated unique code
       value: "LoTR", // item value; length is limited to 1-255 characters
       isResolved: true,
     },
     {
-      id: "64e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("64e1554617f0e248baf15f42"), //generated unique code
       value: "42", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
     {
-      id: "74e1554617f0e248baf15f42", //generated unique code
+      id: ObjectId("74e1554617f0e248baf15f42"), //generated unique code
       value: "Harry Poter", // item value; length is limited to 1-255 characters
       isResolved: false,
     },
   ],
-}
+}]
 );
 
