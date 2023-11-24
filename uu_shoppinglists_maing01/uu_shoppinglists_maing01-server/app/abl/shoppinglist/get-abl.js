@@ -13,7 +13,7 @@ class GetAbl {
     this.dao = DaoFactory.getDao(Schemas.SHOPPINGLIST);
   }
 
-  async get(awid, dtoIn, authorizationResult) {
+  async get(awid, dtoIn,session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // hds 1, 1.1
@@ -29,7 +29,7 @@ class GetAbl {
 
     // hds 2
     const allowedStateRules = {
-        [Profiles.AUTHENTICATED]: new Set([Shoppinglists.States.ACTIVE]),
+      [Profiles.AUTHENTICATED]: new Set([Shoppinglists.States.ACTIVE]),
     };
     // 2.1, 2.1.1, 2.2, 2.2.1, 2.2.2
     await InstanceChecker.ensureInstanceAndState(
@@ -46,6 +46,14 @@ class GetAbl {
       // 3.1
       throw new Errors.Get.ShoppinglistDoesNotExist(uuAppErrorMap, { shoppinglistId: dtoIn.id });
     }
+
+    const uuIdentity = session.getIdentity().getUuIdentity();
+    const isOwner = uuIdentity === shoppinglist.ownerId;
+    const isMember = shoppinglist.memberIdList.includes(uuIdentity)
+    if (!isOwner&&!isMember) {
+      // 5.1
+      throw new Errors.Get.UserNotAuthorized({ uuAppErrorMap });
+    } 
 
     // hds 4
     const dtoOut = {

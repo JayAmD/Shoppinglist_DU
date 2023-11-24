@@ -9,35 +9,27 @@ const { Profiles, Schemas, Shoppinglists } = require("../constants");
 const { ObjectId } = require("bson");
 
 
-class CreateAbl {
+class ItemDeleteAbl {
   constructor() {
     this.validator = Validator.load();
     this.dao = DaoFactory.getDao(Schemas.SHOPPINGLIST);
   }
 
-  async create(awid, dtoIn, session, authorizationResult) {
+  async itemDelete(awid, dtoIn, session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // hds 1, 1.1
-    const validationResult = this.validator.validate("shoppinglistCreateDtoInType", dtoIn);
+    const validationResult = this.validator.validate("shoppinglistItemDeleteDtoInType", dtoIn);
     // 1.2, 1.2.1, 1.3, 1.3.1
     uuAppErrorMap = ValidationHelper.processValidationResult(
       dtoIn,
       validationResult,
       uuAppErrorMap,
-      Warnings.Create.UnsupportedKeys.code,
-      Errors.Create.invalidDtoIn
+      Warnings.ItemDelete.UnsupportedKeys.code,
+      Errors.ItemDelete.invalidDtoIn
     );
 
-    const addedValues = {
-        isArchived: false,
-      ownerId: session.getIdentity().getUuIdentity(),
-    };
-
-    const uuObject = {
-      ...dtoIn,
-      ...addedValues,
-    };
+    
 
     // hds 2
     const allowedStateRules = {
@@ -48,43 +40,44 @@ class CreateAbl {
       awid,
       allowedStateRules,
       authorizationResult,
-      Errors.Create,
+      Errors.ItemDelete,
       uuAppErrorMap
     );
 
-    // hds 3, 3.1
-    if (dtoIn.name.trim().length === 0) {
-      throw new Errors.Create.InvalidName({ uuAppErrorMap }, { name: dtoIn.name });
+    const shoppinglist = await this.dao.get(awid, dtoIn.shoppinglistId);
+    if (!shoppinglist) {
+      // 3.1
+      throw new Errors.ItemDelete.ShoppinglistDoesNotExist(uuAppErrorMap, { shoppinglistId: dtoIn.shoppinglistId });
     }
 
-    // hds 4
-   
-let itemList=[]
-uuObject.itemList.map(itemValue=>{
-    itemList.push({value:itemValue,
-        id:new ObjectId(),
-        isResolved: false,
-        })
-})
-uuObject.itemList=itemList
+    const existsItem = shoppinglist.itemList.some((el) => {
+      return el.id.toString() === dtoIn.itemId;
+    });
+    if (!existsItem) {
+      // 3.1
+      throw new Errors.ItemDelete.ShoppinglistItemDoesNotExist(uuAppErrorMap, {shoppinglistId:dtoIn.shoppinglistId,itemId:dtoIn.itemId    });
+    }
 
-    // hds 6
-    uuObject.awid = awid;
-    let shoppinglist;
+    const uuIdentity = session.getIdentity().getUuIdentity();
+    const isOwner = uuIdentity === shoppinglist.ownerId;
+    if (!isOwner) {
+      // 5.1
+      throw new Errors.ItemDelete.UserNotAuthorized({ uuAppErrorMap });
+    } 
 
+    let updatedShoppinglist;
     try {
-      shoppinglist = await this.dao.create(uuObject);
+      updatedShoppinglist = await this.dao.itemDelete(awid, dtoIn.shoppinglistId, dtoIn.itemId);
     } catch (e) {
       // 6.1
       if (e instanceof ObjectStoreError) {
-        throw new Errors.Create.ShoppinglistDaoCreateFailed({ uuAppErrorMap }, e);
+        throw new Errors.ItemDelete.ShoppinglistDaoItemDeleteFailed({ uuAppErrorMap }, e);
       }
       throw e;
     }
 
-    // hds 7
     const dtoOut = {
-      ...shoppinglist,
+      ...updatedShoppinglist,
       uuAppErrorMap,
     };
 
@@ -92,4 +85,4 @@ uuObject.itemList=itemList
   }
 }
 
-module.exports = new CreateAbl();
+module.exports = new ItemDeleteAbl();

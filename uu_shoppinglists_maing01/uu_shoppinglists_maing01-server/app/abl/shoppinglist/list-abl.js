@@ -2,7 +2,7 @@
 const { Validator } = require("uu_appg01_server").Validation;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
-const Errors = require("../../api/errors/shoppinglist-error.js");
+const Errors = require("../../api/errors/shoppinglist-error");
 const Warnings = require("../../api/warnings/shoppinglist-warning");
 const InstanceChecker = require("../../component/instance-checker");
 const { Profiles, Schemas, Shoppinglists } = require("../constants");
@@ -20,7 +20,7 @@ class ListAbl {
     this.dao = DaoFactory.getDao(Schemas.SHOPPINGLIST);
   }
 
-  async list(awid, dtoIn, authorizationResult) {
+  async list(awid, dtoIn,session, authorizationResult) {
     let uuAppErrorMap = {};
 
     // hds 1, 1.1
@@ -57,8 +57,8 @@ class ListAbl {
 
     // hds 3
     let list;
-    
-      list = await this.dao.list(awid, dtoIn.sortBy, dtoIn.order, dtoIn.pageInfo);
+    const uuIdentity = session.getIdentity().getUuIdentity();
+      list = await this.dao.list(awid,uuIdentity, dtoIn.sortBy, dtoIn.order, dtoIn.pageInfo);
     
 
     // hds 4

@@ -21,9 +21,29 @@ const Warnings = {
       code: `${Errors.Update.UC_CODE}unsupportedKeys`,
     },
   },
+  Leave: {
+    UnsupportedKeys: {
+      code: `${Errors.Leave.UC_CODE}unsupportedKeys`,
+    },
+  },
   Delete: {
     UnsupportedKeys: {
       code: `${Errors.Delete.UC_CODE}unsupportedKeys`,
+    },
+  },
+  ItemAdd: {
+    UnsupportedKeys: {
+      code: `${Errors.ItemAdd.UC_CODE}unsupportedKeys`,
+    },
+  },
+  ItemUpdate: {
+    UnsupportedKeys: {
+      code: `${Errors.ItemUpdate.UC_CODE}unsupportedKeys`,
+    },
+  },
+  ItemDelete: {
+    UnsupportedKeys: {
+      code: `${Errors.ItemDelete.UC_CODE}unsupportedKeys`,
     },
   },
 };
