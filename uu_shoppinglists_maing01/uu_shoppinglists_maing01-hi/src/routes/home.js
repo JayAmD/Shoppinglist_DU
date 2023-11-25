@@ -35,8 +35,8 @@ let Home = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
-    
-//@@viewOff:private
+
+    //@@viewOff:private
 
     //@@viewOn:interface
     //@@viewOff:interface
@@ -46,8 +46,7 @@ let Home = createVisualComponent({
     return (
       <div {...attrs}>
         <ListProvider>
-          
-          {({shoppingListList,create,logedUser,switchLogedUser,user, onDeleteList }) => (
+          {/* {({shoppingListList,create,logedUser,switchLogedUser,user, onDeleteList }) => (
             <div>
               <NavBar logedUser={logedUser} switchLogedUser={switchLogedUser} user={user}/>
             <CreateView create={create}
@@ -59,6 +58,30 @@ let Home = createVisualComponent({
                 onDeleteList={onDeleteList}
               />
             </div>
+          )} */}
+
+          {({ shoppinglistDataList, logedUser, switchLogedUser, user }) => (
+            
+            <>
+              {shoppinglistDataList.state === "pendingNoData" && <Uu5Elements.Skeleton width="100%" height="200px" />}
+              {(shoppinglistDataList.state === "pending" || shoppinglistDataList.state.includes("ready")) && (
+                
+                <div>
+                  <NavBar logedUser={logedUser} switchLogedUser={switchLogedUser} user={user} />
+                  <CreateView create={shoppinglistDataList.handlerMap.create} logedUser={logedUser} />
+                  <View
+                    shoppingListList={shoppinglistDataList.data}
+                    logedUser={logedUser}
+                  />
+                </div>
+              )}
+               {shoppinglistDataList.state.includes("error") && (
+            <Uu5Elements.HighlightedBox colorScheme="negative">
+              {shoppinglistDataList.errorData.toString()}
+            </Uu5Elements.HighlightedBox>
+          )}
+              
+            </>
           )}
         </ListProvider>
       </div>

@@ -23,7 +23,7 @@ const Tile = createVisualComponent({
   render(props) {
     //@@viewOn:private
     let { data, ...otherProps } = props;
-    const slicedArray = data.itemList.slice(0, 3);
+    const slicedArray = data.data.itemList.slice(0, 3);
     const [, setRoute] = useRoute();
     const [open, setOpen] = useState(false);
 
@@ -42,7 +42,7 @@ const Tile = createVisualComponent({
           {...otherProps}
           headerOverlap
           className={Config.Css.css({
-            backgroundColor: data.isArchived ? "#dfd0a5" : "",
+            backgroundColor: data.data.isArchived ? "#dfd0a5" : "",
           })}
           footer={
             <div>
@@ -50,8 +50,8 @@ const Tile = createVisualComponent({
                  marginBottom: 4,
                  marginRight: 4,
                })} 
-               onClick={() => setRoute("detail",{ id: data.id })}>Open detail</Button>
-              {data.ownerId === props.logedUser.id ? (
+               onClick={() => setRoute("detail",{ id: data.data.id })}>Open detail</Button>
+              {data.data.ownerId === props.logedUser.id ? (
                <Button
                
                colorScheme="red"
@@ -78,7 +78,7 @@ const Tile = createVisualComponent({
                   })}
                 >
                   <div>
-                    <strong>{data.name}</strong>
+                    <strong>{data.data.name}</strong>
                   </div>
                   <Uu5Elements.Line />
                   {slicedArray.map((item) => (

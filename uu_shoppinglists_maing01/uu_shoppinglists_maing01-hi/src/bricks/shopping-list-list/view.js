@@ -17,7 +17,7 @@ const FILTER_LIST = [
     label: "Archived",
     filter: (item, value) => {
       if (!value) {
-        return !item.isArchived
+        return !item.data.isArchived
       }
       return true;
     },
@@ -29,7 +29,7 @@ const SORTER_LIST = [
   {
     key: "name",
     label: "Name",
-    sort: (a, b) => a.name.localeCompare(b.name),
+    sort: (a, b) => a.data.name.localeCompare(b.name),
   },
 
 ];
@@ -84,13 +84,14 @@ const View = createVisualComponent({
       });
     }
 
-    function handleDeleteList(event) {
+    async function handleDeleteList(event) {
+      
       const list = event.data;
 
       try {
-        props.onDeleteList(list);
+        await list.handlerMap.delete()
         addAlert({
-          message: `The list ${list.name} has been deleted.`,
+          message: `The list ${list.data.name} has been deleted.`,
           priority: "success",
           durationMs: 2000,
         });
@@ -113,7 +114,7 @@ const View = createVisualComponent({
         <div>
         <div className={Config.Css.css({ padding: "16px 32px" })}>
           <Uu5Tiles.ControllerProvider
-            data={props.shoppingListList}
+            data={props.shoppingListList|| []}
              filterDefinitionList={FILTER_LIST}
             filterList={filterList}
             onFilterChange={onFilterChange}
@@ -128,7 +129,6 @@ const View = createVisualComponent({
             <Uu5TilesControls.FilterBar initialExpanded displayClearButton={false} displayManagerButton={false} displayCloseButton={false}
  />
             <Uu5TilesControls.SorterBar displayClearButton={false} displayManagerButton={false} displayCloseButton={false} />
-            <Uu5TilesControls.Counter />
             <Uu5TilesElements.Grid tileMinWidth={150} tileMaxWidth={250}  >
               {<Tile logedUser={props.logedUser} onDeleteList={handleDeleteList} />}
             </Uu5TilesElements.Grid>

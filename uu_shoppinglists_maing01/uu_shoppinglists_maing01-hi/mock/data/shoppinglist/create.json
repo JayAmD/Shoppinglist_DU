@@ -1,0 +1,33 @@
+{
+	"name": "Buildings",
+	"memberIdList": [
+		"8156-5151-6521-0000"
+	],
+	"itemList": [
+		{
+			"value": "Castle",
+			"id": "6560ea4c6979c23585c333fc",
+			"isResolved": false
+		},
+		{
+			"value": "Skyscraper",
+			"id": "6560ea4c6979c23585c333fd",
+			"isResolved": false
+		},
+		{
+			"value": "Cottage",
+			"id": "6560ea4c6979c23585c333fe",
+			"isResolved": false
+		}
+	],
+	"isArchived": false,
+	"ownerId": "8780-522-7322-0000",
+	"awid": "22222222222222222222222222222222",
+	"sys": {
+		"cts": "2023-11-24T18:24:12.145Z",
+		"mts": "2023-11-24T18:24:12.145Z",
+		"rev": 0
+	},
+	"id": "6560ea4c7dfb5a1644f2bcef",
+	"uuAppErrorMap": {}
+}
