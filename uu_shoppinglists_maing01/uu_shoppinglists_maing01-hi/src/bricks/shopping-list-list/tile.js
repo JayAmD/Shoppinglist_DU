@@ -5,6 +5,9 @@ import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import { Button } from "uu5g05-elements";
+
+import { useUserContext } from "../users/user-context.js";
+
 //@@viewOff:imports
 
 const Tile = createVisualComponent({
@@ -26,6 +29,8 @@ const Tile = createVisualComponent({
     const slicedArray = data.data.itemList.slice(0, 3);
     const [, setRoute] = useRoute();
     const [open, setOpen] = useState(false);
+
+    const {loggedUser} = useUserContext();
 
     function handleDeleteList(event) {
       props.onDeleteList(new Utils.Event(data, event));
@@ -51,7 +56,7 @@ const Tile = createVisualComponent({
                  marginRight: 4,
                })} 
                onClick={() => setRoute("detail",{ id: data.data.id })}>Open detail</Button>
-              {data.data.ownerId === props.logedUser.id ? (
+              {data.data.ownerId === loggedUser.id ? (
                <Button
                
                colorScheme="red"

@@ -1,10 +1,13 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content } from "uu5g05";
+import { createVisualComponent, Utils, Content,useState } from "uu5g05";
 import Config from "./config/config.js";
 import ItemCreate from "./item-create.js";
 import ShoppingListHeader from "./shopping-list-header.js";
+import Uu5Elements from "uu5g05-elements"
+
 
 import ItemList from "./item-list.js";
+import UsersDrawer from "./users-drawer.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -36,6 +39,9 @@ const DetailView = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+
+    const [menuOpen, setMenuOpen] = useState(false);
+
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -47,8 +53,33 @@ const DetailView = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
+         <Uu5Elements.Drawer
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        content={<>
+          <Uu5Elements.Button
+            icon={!menuOpen ? "uugds-close" : "uugds-menu"}
+            children={menuOpen ? "Close Members" : "Open Members"}
+            significance="highlighted"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className={Config.Css.css({ marginBottom: 24 })}
+          />
+        <UsersDrawer shoppingList={props.shoppingList} handleUpdate={props.onUpdate} leave={props.leave}/>
+        </>}
+      >
+        <div className={Config.Css.css({ padding: 24 })}>
+          {!menuOpen&&<Uu5Elements.Button
+            icon={menuOpen ? "uugds-close" : "uugds-menu"}
+            children={menuOpen ? "Close Members" : "Open Members"}
+            significance="highlighted"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className={Config.Css.css({ marginBottom: 24 })}
+          />}
+         
+
         <div>
           <ShoppingListHeader title={props.shoppingList.name}
+          ownerId={props.shoppingList.ownerId}
           onEditTitle={props.onEditTitle}
           onArchive={props.onArchive}
           />
@@ -60,6 +91,9 @@ const DetailView = createVisualComponent({
         onResolve={props.onResolve}
         />
         </div>
+
+        </div>
+      </Uu5Elements.Drawer>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
     ) : null;

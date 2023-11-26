@@ -169,41 +169,41 @@ import Calls from "calls";
 //   },
 // ];//Obsolete
 
-let user = [
-  {
-    id: "11", //generated unique code
-    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-    sys: {
-      cts: "2022-01-14 10:50:21.637Z", //create timestamp
-      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-      rev: 0, //revision number
-    },
-    firstname: "Petr",
-    surname: "Novák",
-  },
-  {
-    id: "22", //generated unique code
-    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-    sys: {
-      cts: "2022-01-14 10:50:21.637Z", //create timestamp
-      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-      rev: 0, //revision number
-    },
-    firstname: "Jan",
-    surname: "Zima",
-  },
-  {
-    id: "33", //generated unique code
-    awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
-    sys: {
-      cts: "2022-01-14 10:50:21.637Z", //create timestamp
-      mts: "2022-01-14 10:50:42.542Z", //modification timestamp
-      rev: 0, //revision number
-    },
-    firstname: "Vojtech",
-    surname: "Palacinka",
-  },
-];
+// let user = [
+//   {
+//     id: "11", //generated unique code
+//     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+//     sys: {
+//       cts: "2022-01-14 10:50:21.637Z", //create timestamp
+//       mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+//       rev: 0, //revision number
+//     },
+//     firstname: "Petr",
+//     surname: "Novák",
+//   },
+//   {
+//     id: "22", //generated unique code
+//     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+//     sys: {
+//       cts: "2022-01-14 10:50:21.637Z", //create timestamp
+//       mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+//       rev: 0, //revision number
+//     },
+//     firstname: "Jan",
+//     surname: "Zima",
+//   },
+//   {
+//     id: "33", //generated unique code
+//     awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+//     sys: {
+//       cts: "2022-01-14 10:50:21.637Z", //create timestamp
+//       mts: "2022-01-14 10:50:42.542Z", //modification timestamp
+//       rev: 0, //revision number
+//     },
+//     firstname: "Vojtech",
+//     surname: "Palacinka",
+//   },
+// ];
 //@@viewOff:constants
 
 //@@viewOn:helpers
@@ -225,7 +225,7 @@ const ListProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    const [logedUser, setLogedUser] = useState(user[0]);
+    // const [logedUser, setLogedUser] = useState(user[0]);
 
 
     const shoppinglistDataList = useDataList({
@@ -277,13 +277,13 @@ const ListProvider = createComponent({
 
    // const [shoppingListList, setShoppingListList] = useState();//Obsolete
 
-    function switchLogedUser(value) {
-      setLogedUser(() => {
-        const result = user.find((element) => element.id === value);
+    // function switchLogedUser(value) {
+    //   setLogedUser(() => {
+    //     const result = user.find((element) => element.id === value);
 
-        return result;
-      });
-    }
+    //     return result;
+    //   });
+    // }
 
     // function onDeleteList(list) {
     //   setShoppingListList((prev) => {
@@ -332,7 +332,7 @@ const ListProvider = createComponent({
   
 
 
-      const value = { shoppinglistDataList,logedUser, switchLogedUser, user};
+      const value = { shoppinglistDataList};
     return typeof props.children === "function" ? props.children(value) : props.children;
 
   

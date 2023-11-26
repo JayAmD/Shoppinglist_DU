@@ -87,7 +87,7 @@ const Calls = {
       const commandUri = Calls.getCommandUri("shoppinglist/item/delete");
       return Calls.call("post", commandUri, dtoIn);
     },
-    //TODO add call for name of users
+    
   }
 };
 

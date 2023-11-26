@@ -4,6 +4,8 @@ import Config from "./config/config.js";
 
 import Uu5Forms from "uu5g05-forms";
 import { Dropdown,Text, useAlertBus } from "uu5g05-elements";
+import { useUserContext } from "../users/user-context.js";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -66,6 +68,8 @@ const ShoppingListHeader = createVisualComponent({
     const { children } = props;
     const [isEditableTitle, setIsEditableTitle] = useState(false);
     const { addAlert } = useAlertBus();
+    const {loggedUser} = useUserContext();
+
 
 
     function showError(error, header = "") {
@@ -144,7 +148,7 @@ const ShoppingListHeader = createVisualComponent({
           {isEditableTitle?
                   <TextInput autoFocus value={props.title} onChange={handleEditTitle} />
                 :props.title}
-        <Dropdown label="Actions" itemList={itemList}/>
+       { loggedUser.id===props.ownerId&&<Dropdown label="Actions" itemList={itemList}/>}
         </Text>
           
           

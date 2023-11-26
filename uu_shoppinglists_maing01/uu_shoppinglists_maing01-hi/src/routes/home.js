@@ -58,26 +58,27 @@ let Home = createVisualComponent({
                 onDeleteList={onDeleteList}
               />
             </div>
-          )} */}
+          )} //Obsolete*/}
 
-          {({ shoppinglistDataList, logedUser, switchLogedUser, user }) => (
+          {({ shoppinglistDataList}) => (
             
             <>
-              {shoppinglistDataList.state === "pendingNoData" && <Uu5Elements.Skeleton width="100%" height="200px" />}
+              {shoppinglistDataList.state === "pendingNoData" &&  <Uu5Elements.Pending
+      type="circular"
+      size="max"
+    />}
               {(shoppinglistDataList.state === "pending" || shoppinglistDataList.state.includes("ready")) && (
                 
                 <div>
-                  <NavBar logedUser={logedUser} switchLogedUser={switchLogedUser} user={user} />
-                  <CreateView create={shoppinglistDataList.handlerMap.create} logedUser={logedUser} />
+                  <CreateView create={shoppinglistDataList.handlerMap.create} />
                   <View
                     shoppingListList={shoppinglistDataList.data}
-                    logedUser={logedUser}
                   />
                 </div>
               )}
                {shoppinglistDataList.state.includes("error") && (
             <Uu5Elements.HighlightedBox colorScheme="negative">
-              {shoppinglistDataList.errorData.toString()}
+              {shoppinglistDataList.errorData.error.toString()}
             </Uu5Elements.HighlightedBox>
           )}
               

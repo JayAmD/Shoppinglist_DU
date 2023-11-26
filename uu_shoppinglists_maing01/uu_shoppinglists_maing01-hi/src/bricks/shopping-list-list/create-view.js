@@ -16,7 +16,7 @@ const Mode = {
 //@@viewOn:css
 const Css = {
  
-  button: () => Config.Css.css({ display: "block", margin: "0px auto" }),
+  button: () => Config.Css.css({ display: "block", margin: "10px auto" }),
 };
 //@@viewOff:css
 
@@ -87,7 +87,7 @@ const CreateView = createVisualComponent({
 
     switch (mode) {
       case Mode.BUTTON:
-        content = <CreateButton onClick={() => setMode(Mode.FORM)}>New list</CreateButton>;
+        content = <CreateButton onClick={() => setMode(Mode.FORM)} >New list</CreateButton>;
         break;
       default:
         content = (

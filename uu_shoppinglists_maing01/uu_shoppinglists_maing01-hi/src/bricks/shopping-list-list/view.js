@@ -130,7 +130,7 @@ const View = createVisualComponent({
  />
             <Uu5TilesControls.SorterBar displayClearButton={false} displayManagerButton={false} displayCloseButton={false} />
             <Uu5TilesElements.Grid tileMinWidth={150} tileMaxWidth={250}  >
-              {<Tile logedUser={props.logedUser} onDeleteList={handleDeleteList} />}
+              {<Tile  onDeleteList={handleDeleteList} />}
             </Uu5TilesElements.Grid>
           </Uu5Tiles.ControllerProvider>
         </div>

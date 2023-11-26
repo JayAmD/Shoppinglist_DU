@@ -1,6 +1,8 @@
 //@@viewOn:imports
-import { createComponent, useState, Utils, useRoute } from "uu5g05";
+import { createComponent, useState, Utils, useRoute,useDataObject } from "uu5g05";
 import Config from "./config/config.js";
+import Calls from "calls";
+
 
 
 //@@viewOff:imports
@@ -227,74 +229,107 @@ const DataProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const [route, setRoute] = useRoute();
-    let currentList = initialShoppingListList.find((element)=> element.id ===route.params.id)
-{console.log(currentList);}//TODO nefunkcni prechod na route s parametry
+    const detailId = route.params.id;
 
-    const [shoppingList, setShoppingList] = useState(currentList);
-    const [logedUser, setLogedUser] = useState(user[0]);
+    //let currentList = initialShoppingListList.find((element)=> element.id ===route.params.id) //Obsolete
 
-    
-    function remove(itemDelete) {
-      setShoppingList((prevShoppingList) => {
-        let filteredItemList = prevShoppingList.itemList.filter((item) => item.id !== itemDelete.id);
-        let filteredShoppingList = { ...prevShoppingList, itemList: filteredItemList };
 
-        return filteredShoppingList;
-      });
+
+    let dataObject = useDataObject({
+      handlerMap: {
+        load: handleLoad,
+        update:handleUpdate,
+       itemDelete:handleItemDelete,
+       itemUpdate:handleItemUpdate,
+       itemAdd:handleItemAdd,
+       leave:handleLeave
+      },
+    });
+
+    function handleUpdate(dtoIn) {
+      return Calls.Shoppinglist.update(dtoIn);
+    }
+    function handleLoad() {
+      return Calls.Shoppinglist.get({id:detailId});
+    }
+    function handleLeave() {
+      return Calls.Shoppinglist.leave({id:detailId});
+    }
+    function handleItemDelete(item) {
+      return Calls.Shoppinglist.itemDelete({shoppinglistId:detailId,itemId:item.id});
+    }
+    function handleItemUpdate(dtoIn) {
+      return Calls.Shoppinglist.itemUpdate({shoppinglistId:detailId,item:dtoIn});
+    }
+    function handleItemAdd(dtoIn) {
+      return Calls.Shoppinglist.itemAdd({shoppinglistId:detailId,dtoIn});
     }
 
-    function editItem(item) {
-      setShoppingList((prevShoppingList) => {
-        let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
-        let result = { ...prevShoppingList };
-        result.itemList[editedIndex].value = item.value;
-        return result;
-      });
-    }
 
-    function resolve(item) {
-      setShoppingList((prevShoppingList) => {
-        let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
-        let result = { ...prevShoppingList };
-        result.itemList[editedIndex].isResolved
-          ? (result.itemList[editedIndex].isResolved = false)
-          : (result.itemList[editedIndex].isResolved = true);
-        return result;
-      });
-    }
 
-    function addItem(itemValue) {
-      setShoppingList((prevShoppingList) => {
-        let result = { ...prevShoppingList };
-        let addedItem = {
-          id: Utils.String.generateId(),
-          value: itemValue.value,
-          isResolved: false,
-        };
-        result.itemList.push(addedItem);
-        return result;
-      });
-    }
+   // const [shoppingList, setShoppingList] = useState(currentList);
+
+    // function remove(itemDelete) {
+    //   setShoppingList((prevShoppingList) => {
+    //     let filteredItemList = prevShoppingList.itemList.filter((item) => item.id !== itemDelete.id);
+    //     let filteredShoppingList = { ...prevShoppingList, itemList: filteredItemList };
+
+    //     return filteredShoppingList;
+    //   });
+    // }
+
+    // function editItem(item) {
+    //   setShoppingList((prevShoppingList) => {
+    //     let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
+    //     let result = { ...prevShoppingList };
+    //     result.itemList[editedIndex].value = item.value;
+    //     return result;
+    //   });
+    // }
+
+    // function resolve(item) {
+    //   setShoppingList((prevShoppingList) => {
+    //     let editedIndex = prevShoppingList.itemList.findIndex((currentItem) => currentItem.id === item.id);
+    //     let result = { ...prevShoppingList };
+    //     result.itemList[editedIndex].isResolved
+    //       ? (result.itemList[editedIndex].isResolved = false)
+    //       : (result.itemList[editedIndex].isResolved = true);
+    //     return result;
+    //   });
+    // }
+
+    // function addItem(itemValue) {
+    //   setShoppingList((prevShoppingList) => {
+    //     let result = { ...prevShoppingList };
+    //     let addedItem = {
+    //       id: Utils.String.generateId(),
+    //       value: itemValue.value,
+    //       isResolved: false,
+    //     };
+    //     result.itemList.push(addedItem);
+    //     return result;
+    //   });
+    // }
 
  
-    function editTitle(title) {
-      setShoppingList((prevShoppingList) => {
-        let result = {...prevShoppingList, name:title}
-        return result;
-      });
-    }
+    // function editTitle(title) {
+    //   setShoppingList((prevShoppingList) => {
+    //     let result = {...prevShoppingList, name:title}
+    //     return result;
+    //   });
+    // }
 
-    function archive() {
-      setShoppingList((prevShoppingList) => {
-        let result = {...prevShoppingList, isArchived:true}
-        console.log(result);
-        return result;
-      });
-    }
+    // function archive() {
+    //   setShoppingList((prevShoppingList) => {
+    //     let result = {...prevShoppingList, isArchived:true}
+    //     console.log(result);
+    //     return result;
+    //   });
+    // }
     //@@viewOff:private
 
     //@@viewOn:render
-    const value = { shoppingList, remove, editItem, resolve, addItem,editTitle,archive };
+    const value = { dataObject};
     return typeof props.children === "function" ? props.children(value) : props.children;
     //@@viewOff:render
   },
