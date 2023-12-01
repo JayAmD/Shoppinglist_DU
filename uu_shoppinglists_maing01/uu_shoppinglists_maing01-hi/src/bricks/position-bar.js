@@ -40,7 +40,7 @@ const PositionBar = createVisualComponent({
       // { children: <Lsi import={importLsi} path={["Menu", "home"]} />, onClick: () => setRoute("home") },
       // // homework routes
        {
-        children: "Seznam nákupních seznamů",
+        children: <Lsi import={importLsi} path={["Menu", "home"]} />,
         onClick: () => setRoute("home"),
         collapsed: false,
       },

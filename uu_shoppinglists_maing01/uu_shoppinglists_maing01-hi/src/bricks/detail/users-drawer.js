@@ -1,7 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content,useRef,useRoute } from "uu5g05";
+import { createVisualComponent, Utils, Content,Lsi,useRef,useRoute,useLsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
+import importLsi from "../../lsi/import-lsi.js";
+
 
 import { useUserContext } from "../users/user-context.js";
 
@@ -48,7 +50,7 @@ const UsersDrawer = createVisualComponent({
       return shoppingList.memberIdList.map((memberId) => {
         const user = userList.find((item) => memberId === item.id);
 
-        if (typeof user === "undefined") return "User not found";
+        if (typeof user === "undefined") return <Lsi import={importLsi} path={["Members", "userNotFound"]} />;
         return (
           <Uu5Elements.Grid key={user.id} templateColumns={isEditable ? "auto max-content" : "100%"}>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -101,14 +103,14 @@ const UsersDrawer = createVisualComponent({
         <div>
           <div style={{ display: "flex", alignItems: "center" }}>
             {userList.find((user) => user.id === shoppingList.ownerId)?.name}
-            <div style={{ fontStyle: "italic", color: "grey", marginLeft: "8px" }}>(owner)</div>
+            <div style={{ fontStyle: "italic", color: "grey", marginLeft: "8px" }}>(<Lsi import={importLsi} path={["Members", "owner"]} />)</div>
             {isOwner && <div style={{ color: "blue", marginLeft: "8px" }}>*</div>}
           </div>
 
           <Uu5Elements.Line size={"s"} style={{ margin: "4px 0" }} significance={"subdued"} />
           {!isOwner && (
             <Uu5Elements.Button
-              children="Leave the list"
+              children={<Lsi import={importLsi} path={["Members", "leave"]} />}
               significance="highlighted"
               colorScheme="red"
               onClick={handleLeave}
@@ -117,9 +119,9 @@ const UsersDrawer = createVisualComponent({
           )}
           {isOwner && (
             <Uu5Elements.Grid className={Config.Css.css({ marginBottom: 16, marginTop: 16 })}>
-              <input placeholder="New memeber ID" ref={inputRef}></input>
+              <input placeholder={useLsi({import:importLsi,path:["Members","new"]})} ref={inputRef}></input>
               <Uu5Elements.Button
-                children="Add new member"
+                children={<Lsi import={importLsi} path={["Members", "add"]} />}
                 significance="highlighted"
                 colorScheme="green"
                 onClick={handleAddMember}
@@ -127,7 +129,7 @@ const UsersDrawer = createVisualComponent({
             </Uu5Elements.Grid>
           )}
           <h3 style={{ display: "flex", alignItems: "center" }} className={Config.Css.css({ marginBottom: 4 })}>
-            Members:{" "}
+          <Lsi import={importLsi} path={["Members", "members"]} />:{" "}
           </h3>
           {getUserList()}
         </div>

@@ -1,10 +1,12 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useRoute } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useRoute,Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Tiles from "uu5tilesg02";
 import { useAlertBus } from "uu5g05-elements";
 import Uu5TilesControls from "uu5tilesg02-controls";
 import Uu5TilesElements from "uu5tilesg02-elements";
+import importLsi from "../../lsi/import-lsi.js";
+
 
 import Tile from "./tile.js";
 
@@ -14,7 +16,7 @@ import Tile from "./tile.js";
 const FILTER_LIST = [
   {
     key: "Archived",
-    label: "Archived",
+    label: <Lsi import={importLsi} path={["ListView", "archived"]} />,
     filter: (item, value) => {
       if (!value) {
         return !item.data.isArchived
@@ -28,7 +30,7 @@ const FILTER_LIST = [
 const SORTER_LIST = [
   {
     key: "name",
-    label: "Name",
+    label: <Lsi import={importLsi} path={["ListView", "nameSort"]} />,
     sort: (a, b) => a.data.name.localeCompare(b.name),
   },
 

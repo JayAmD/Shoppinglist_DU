@@ -5,6 +5,8 @@ import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import Uu5TilesElements from "uu5tilesg02-elements";
 import { Button } from "uu5g05-elements";
+import importLsi from "../../lsi/import-lsi.js";
+
 
 import { useUserContext } from "../users/user-context.js";
 
@@ -55,14 +57,14 @@ const Tile = createVisualComponent({
                  marginBottom: 4,
                  marginRight: 4,
                })} 
-               onClick={() => setRoute("detail",{ id: data.data.id })}>Open detail</Button>
+               onClick={() => setRoute("detail",{ id: data.data.id })}><Lsi import={importLsi} path={["Tile", "detail"]} /></Button>
               {data.data.ownerId === loggedUser.id ? (
                <Button
                
                colorScheme="red"
                onClick={() => setOpen(true)}
              >
-               Delete list
+               <Lsi import={importLsi} path={["Tile", "delete"]} />
              </Button>
               ) : (
                 ""

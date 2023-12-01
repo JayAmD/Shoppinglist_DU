@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, PropTypes } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, PropTypes,useLsi, Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import { Button, useAlertBus } from "uu5g05-elements";
 import { Form, FormText } from "uu5g05-forms";
+
 
 //@@viewOff:imports
 
@@ -50,6 +51,9 @@ const ItemCreate = createVisualComponent({
 
     const [input, setInput] = useState("");//TODO: FormText nema value property, nejde prepsat. Zeptat se na to.
 
+    const placeholderAdd=useLsi({cs:"Nová položka",en:"New item"})
+
+    
     function showError(error, header = "") {
       addAlert({
         header,
@@ -98,9 +102,11 @@ const ItemCreate = createVisualComponent({
               colorScheme="positive"
               significance="highlighted"
             >
-              Add
-            </Button>
-            <FormText value={input} name="value" placeholder="New item" />
+<Lsi  lsi={{
+      cs: "Přidat",
+      en: "Add",
+    }} />            </Button>
+            <FormText value={input} name="value" placeholder={placeholderAdd} />
           </Form>
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

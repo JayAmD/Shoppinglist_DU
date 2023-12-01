@@ -1,8 +1,10 @@
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils,Lsi } from "uu5g05";
 import { Form, FormText, FormSelect, FormFile, FormTextSelect, SubmitButton, CancelButton } from "uu5g05-forms";
 import Config from "./config/config.js";
 import { Modal } from "uu5g05-elements";
+import importLsi from "../../lsi/import-lsi.js"
+
 //@@viewOff:imports
 
 //@@viewOn:css
@@ -46,17 +48,17 @@ const CreateForm = createVisualComponent({
 
     const formControls = (
       <div className={Css.controls()}>
-        <CancelButton onClick={props.onCancel}>Cancel</CancelButton>
-        <SubmitButton>Submit</SubmitButton>
+        <CancelButton onClick={props.onCancel}>{<Lsi import={importLsi} path={["createForm", "cancel"]} />}</CancelButton>
+        <SubmitButton>{<Lsi import={importLsi} path={["createForm", "submit"]} />}</SubmitButton>
       </div>
     );
 
     return (
       <Form {...elementProps} onSubmit={props.onSubmit} onValidate={handleValidate}>
-        <Modal header="Create new shopping list" footer={formControls} open>
-          <FormText label="Title" name="name" maxLength={255} className={Css.input()} required autoFocus />
-          <FormTextSelect name="itemList" label="Add multiple items" itemList={[]} required insertable multiple />
-          <FormTextSelect name="memberIdList" label="Add members(IDs)" itemList={[]} required insertable multiple />
+        <Modal header={<Lsi import={importLsi} path={["createForm", "formTitle"]} />} footer={formControls} open>
+          <FormText label={<Lsi import={importLsi} path={["createForm", "title"]} />} name="name" maxLength={255} className={Css.input()} required autoFocus />
+          <FormTextSelect name="itemList" label={<Lsi import={importLsi} path={["createForm", "items"]} />} itemList={[]} required insertable multiple />
+          <FormTextSelect name="memberIdList" label={<Lsi import={importLsi} path={["createForm", "members"]} />} itemList={[]} required insertable multiple />
         </Modal>
       </Form>
     );

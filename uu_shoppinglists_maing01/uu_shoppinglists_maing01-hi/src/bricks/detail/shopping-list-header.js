@@ -1,10 +1,11 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content,PropTypes, useState } from "uu5g05";
+import { createVisualComponent, Utils, Content,Lsi,PropTypes, useState } from "uu5g05";
 import Config from "./config/config.js";
 
 import Uu5Forms from "uu5g05-forms";
 import { Dropdown,Text, useAlertBus } from "uu5g05-elements";
 import { useUserContext } from "../users/user-context.js";
+import importLsi from "../../lsi/import-lsi.js";
 
 //@@viewOff:imports
 
@@ -82,12 +83,12 @@ const ShoppingListHeader = createVisualComponent({
 
     const itemList = [
       {
-        children: "Edit title",
+        children: <Lsi import={importLsi} path={["Header", "title"]} />,
         icon: "uugds-pencil",
         onClick:handleEditableTitle
       },
       {
-        children: "Archive",
+        children: <Lsi import={importLsi} path={["Header", "archive"]} />,
         icon: "uugds-folder",
         onClick:handleArchive
       },
@@ -148,7 +149,7 @@ const ShoppingListHeader = createVisualComponent({
           {isEditableTitle?
                   <TextInput autoFocus value={props.title} onChange={handleEditTitle} />
                 :props.title}
-       { loggedUser.id===props.ownerId&&<Dropdown label="Actions" itemList={itemList}/>}
+       { loggedUser.id===props.ownerId&&<Dropdown label=<Lsi import={importLsi} path={["Header", "actions"]} /> itemList={itemList}/>}
         </Text>
           
           

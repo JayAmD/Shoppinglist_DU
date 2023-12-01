@@ -1,9 +1,11 @@
 //@@viewOn:imports
 //@@viewOn:imports
-import { createVisualComponent, PropTypes, Utils, useState } from "uu5g05";
+import { createVisualComponent, PropTypes, Utils, useState,Lsi } from "uu5g05";
 import { Button, useAlertBus } from "uu5g05-elements";
 import CreateForm from "./create-form.js";
 import Config from "./config/config.js";
+import importLsi from "../../lsi/import-lsi.js";
+
 //@@viewOff:imports
 //@@viewOff:imports
 
@@ -87,7 +89,7 @@ const CreateView = createVisualComponent({
 
     switch (mode) {
       case Mode.BUTTON:
-        content = <CreateButton onClick={() => setMode(Mode.FORM)} >New list</CreateButton>;
+        content = <CreateButton onClick={() => setMode(Mode.FORM)} >{<Lsi import={importLsi} path={["createForm", "newList"]} />}</CreateButton>;
         break;
       default:
         content = (

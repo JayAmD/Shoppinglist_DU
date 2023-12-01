@@ -30,7 +30,40 @@
     "initialize": "Inicializovat"
   },
   "Menu": {
-    "home": "Vítejte",
-    "about": "O aplikaci"
+    "home": "Domovská stránka"
+  }
+  ,
+  "createForm":{
+    "formTitle":"Vytvořte nový nákupní seznam",
+    "title":"Název",
+    "items":"Přidejte více položek seznamu",
+    "members":"Přidejte ID členů seznamu",
+    "submit":"Vytvořit",
+    "cancel":"Zrušit",
+    "newList":"Nový seznam"
+
+  },
+  "Tile":{
+    "delete":"Smazat seznam",
+    "detail":"Otevřít detail"
+  },
+  "ListView":{
+    "archived":"Archivované",
+    "nameSort":"Název"
+  },
+  "Header":{
+    "actions":"Akce",
+    "title":"Upravit název",
+    "archive":"Archivovat"
+  },
+  "Members":{
+    "open":"Otevřít členy",
+    "close":"Zavřít členy",
+    "owner":"Vlastník",
+    "new":"ID nového člena",
+    "add":"Přidat nového člena",
+    "members":"Členové",
+    "leave":"Opustit seznam",
+    "userNotFound":"Uživate nenealezen"
   }
 }

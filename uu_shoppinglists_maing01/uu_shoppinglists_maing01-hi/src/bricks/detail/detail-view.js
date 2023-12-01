@@ -1,9 +1,10 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content,useState } from "uu5g05";
+import { createVisualComponent, Utils, Content,useState ,Lsi} from "uu5g05";
 import Config from "./config/config.js";
 import ItemCreate from "./item-create.js";
 import ShoppingListHeader from "./shopping-list-header.js";
 import Uu5Elements from "uu5g05-elements"
+import importLsi from "../../lsi/import-lsi.js";
 
 
 import ItemList from "./item-list.js";
@@ -58,8 +59,8 @@ const DetailView = createVisualComponent({
         onClose={() => setMenuOpen(false)}
         content={<>
           <Uu5Elements.Button
-            icon={!menuOpen ? "uugds-close" : "uugds-menu"}
-            children={menuOpen ? "Close Members" : "Open Members"}
+            icon={!menuOpen ? "uugds-menu" : "uugds-close"}
+            children={menuOpen ? <Lsi import={importLsi} path={["Members", "close"]} /> : <Lsi import={importLsi} path={["Members", "open"]} />}
             significance="highlighted"
             onClick={() => setMenuOpen((prev) => !prev)}
             className={Config.Css.css({ marginBottom: 24 })}
@@ -70,7 +71,7 @@ const DetailView = createVisualComponent({
         <div className={Config.Css.css({ padding: 24 })}>
           {!menuOpen&&<Uu5Elements.Button
             icon={menuOpen ? "uugds-close" : "uugds-menu"}
-            children={menuOpen ? "Close Members" : "Open Members"}
+            children={menuOpen ? <Lsi import={importLsi} path={["Members", "close"]} /> : <Lsi import={importLsi} path={["Members", "open"]} />}
             significance="highlighted"
             onClick={() => setMenuOpen((prev) => !prev)}
             className={Config.Css.css({ marginBottom: 24 })}

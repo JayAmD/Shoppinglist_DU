@@ -30,7 +30,39 @@
     "initialize": "Initialize"
   },
   "Menu": {
-    "home": "Welcome",
-    "about": "About Application"
+    "home": "Home"
+    
+  },
+  "createForm":{
+    "title":"Title",
+    "formTitle":"Create new shopping list",
+    "items":"Add multiple items",
+    "members":"Add members(IDs)",
+    "submit":"Create",
+    "cancel":"Cancel",
+    "newList":"New List"
+  },
+  "Tile":{
+    "delete":"Delete list",
+    "detail":"Open detail"
+  },
+  "ListView":{
+    "archived":"Archived",
+    "nameSort":"Name"
+  },
+  "Header":{
+    "actions":"Actions",
+    "title":"Edit title",
+    "archive":"Archive"
+  },
+  "Members":{
+    "open":"Open members",
+    "close":"Close members",
+    "owner":"Owner",
+    "new":"New member ID",
+    "add":"Add new member",
+    "members":"Members",
+    "leave":"Leave the list",
+    "userNotFound":"User not found"
   }
 }
