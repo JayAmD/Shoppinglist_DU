@@ -9,14 +9,17 @@ import importLsi from "../../lsi/import-lsi.js";
 
 import ItemList from "./item-list.js";
 import UsersDrawer from "./users-drawer.js";
+import { useThemeContext } from "../../core/theme-provider/theme-context.js";
+
 //@@viewOff:imports
 
 //@@viewOn:constants
+
 //@@viewOff:constants
 
 //@@viewOn:css
 const Css = {
-  main: () => Config.Css.css({}),
+ 
 };
 //@@viewOff:css
 
@@ -40,6 +43,7 @@ const DetailView = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const { theme } = useThemeContext();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -49,11 +53,18 @@ const DetailView = createVisualComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
+    const attrs = Utils.VisualComponent.getAttrs(props);
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, DetailView);
 
     return currentNestingLevel ? (
-      <div {...attrs}>
+      <div className={Config.Css.css({
+        height:"100%",
+        display: "flex",
+  flexFlow: "column",
+       "backgroundColor": theme
+       
+      })  }      
+      >
          <Uu5Elements.Drawer
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
@@ -96,6 +107,10 @@ const DetailView = createVisualComponent({
         </div>
       </Uu5Elements.Drawer>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
+        <div className={Config.Css.css({
+       flexGrow : 1
+      })  }      
+      ></div>
       </div>
     ) : null;
     //@@viewOff:render

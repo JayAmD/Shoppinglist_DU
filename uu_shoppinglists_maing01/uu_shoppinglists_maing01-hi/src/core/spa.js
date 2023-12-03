@@ -8,6 +8,8 @@ import Config from "./config/config.js";
 import Home from "../routes/home.js";
 import PositionBar from "../bricks/position-bar.js";
 import UserProvider from "../bricks/users/user-provider.js";
+import ThemeProvider from "./theme-provider/theme-provider.js";
+
 
 //@@viewOff:imports
 
@@ -53,6 +55,7 @@ const Spa = createVisualComponent({
 
   render() {
     //@@viewOn:private
+
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -60,12 +63,16 @@ const Spa = createVisualComponent({
 
     //@@viewOn:render
     return (
+      
       <Plus4U5.SpaProvider initialLanguageList={["en", "cs"]}>
         <Uu5Elements.ModalBus>
         <UserProvider>
-
+        <ThemeProvider>
+        
           <PositionBar/>
           <Plus4U5App.Spa routeMap={ROUTE_MAP} />
+          </ThemeProvider>
+
           </UserProvider>
 
         </Uu5Elements.ModalBus>

@@ -30,7 +30,9 @@
     "initialize": "Inicializovat"
   },
   "Menu": {
-    "home": "Domovská stránka"
+    "home": "Domovská stránka",
+    "isLightTheme":"Tmavý režim",
+    "isDarkTheme":"Světlý režim"
   }
   ,
   "createForm":{

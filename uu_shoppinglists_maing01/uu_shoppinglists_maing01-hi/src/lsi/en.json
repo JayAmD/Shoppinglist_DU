@@ -30,7 +30,9 @@
     "initialize": "Initialize"
   },
   "Menu": {
-    "home": "Home"
+    "home": "Home",
+    "isLightTheme":"Dark theme",
+    "isDarkTheme":"Light theme"
     
   },
   "createForm":{

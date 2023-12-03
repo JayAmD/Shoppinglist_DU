@@ -3,6 +3,8 @@ import { createVisualComponent, Lsi, useRoute } from "uu5g05";
 import Plus4U5App from "uu_plus4u5g02-app";
 
 import { useUserContext } from "./users/user-context.js";
+import { useThemeContext } from "../core/theme-provider/theme-context.js";
+
 
 import Config from "./config/config.js";
 import importLsi from "../lsi/import-lsi.js";
@@ -33,11 +35,12 @@ const PositionBar = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { userList, loggedUser, setLoggedUser } = useUserContext();
+    const { theme,switchTheme } = useThemeContext();
    
     const [, setRoute] = useRoute();
 
     const actionList = [
-      // { children: <Lsi import={importLsi} path={["Menu", "home"]} />, onClick: () => setRoute("home") },
+      { children: <Lsi import={importLsi} path={theme==="#FFFFFF"?["Menu", "isLightTheme"]:["Menu", "isDarkTheme"]} />, onClick:()=>switchTheme() },
       // // homework routes
        {
         children: <Lsi import={importLsi} path={["Menu", "home"]} />,

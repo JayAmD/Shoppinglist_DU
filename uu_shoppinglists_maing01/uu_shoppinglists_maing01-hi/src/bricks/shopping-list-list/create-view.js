@@ -89,7 +89,6 @@ const CreateView = createVisualComponent({
 
     switch (mode) {
       case Mode.BUTTON:
-        content = <CreateButton onClick={() => setMode(Mode.FORM)} >{<Lsi import={importLsi} path={["createForm", "newList"]} />}</CreateButton>;
         break;
       default:
         content = (
@@ -98,7 +97,8 @@ const CreateView = createVisualComponent({
         break;
     }
 
-    return <div {...attrs}>{content}</div>;
+    return <div {...attrs}>        <CreateButton onClick={() => setMode(Mode.FORM)} >{<Lsi import={importLsi} path={["createForm", "newList"]} />}</CreateButton>
+    {content}</div>;
     //@@viewOff:render
   },
 });
