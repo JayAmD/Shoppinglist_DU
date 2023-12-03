@@ -37,11 +37,12 @@ const UsersDrawer = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
+    const { userList, loggedUser } = useUserContext();
     const { children, shoppingList, handleUpdate, leave } = props;
     const inputRef = useRef();
     const [, setRoute] = useRoute();
 
-    const { userList, loggedUser } = useUserContext();
+   
 
     const isOwner = shoppingList.ownerId === loggedUser.id;
     const isEditable = isOwner && !shoppingList.archived;
@@ -102,7 +103,8 @@ const UsersDrawer = createVisualComponent({
       <div {...attrs}>
         <div>
           <div style={{ display: "flex", alignItems: "center" }}>
-            {userList.find((user) => user.id === shoppingList.ownerId)?.name}
+            {userList.find((user) => user.id === shoppingList.ownerId).name}
+            {/* {console.log(userList.find((user) => user.id === shoppingList.ownerId)?.name||"nic")} //TODO optat se na tento problem s hookama, prepni si na tento radek a v get.json uprav ownerId na neexistujici ID a uvidis co ti to pri kliknuti na resolve item hodi do konzole*/}
             <div style={{ fontStyle: "italic", color: "grey", marginLeft: "8px" }}>(<Lsi import={importLsi} path={["Members", "owner"]} />)</div>
             {isOwner && <div style={{ color: "blue", marginLeft: "8px" }}>*</div>}
           </div>
