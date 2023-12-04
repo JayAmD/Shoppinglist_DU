@@ -43,7 +43,7 @@ const DetailView = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
-    const { theme } = useThemeContext();
+    const { isDarkMode } = useThemeContext();
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -61,11 +61,12 @@ const DetailView = createVisualComponent({
         height:"100%",
         display: "flex",
   flexFlow: "column",
-       "backgroundColor": theme
+       "backgroundColor": isDarkMode&&"#121212"
        
       })  }      
       >
          <Uu5Elements.Drawer
+             
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         content={<>

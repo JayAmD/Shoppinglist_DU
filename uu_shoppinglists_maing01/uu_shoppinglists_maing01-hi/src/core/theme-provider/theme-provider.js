@@ -4,9 +4,9 @@ import ThemeContext from "./theme-context";
 import Config from "./config/config";
 
 //@@viewOff:imports
-const themeList = [
-  "#FFFFFF"	, "#000000"
-];
+// const themeList = [
+//   "#FFFFFF"	, "#000000"
+// ];
 
 
 export const ThemeProvider = createComponent({
@@ -24,14 +24,13 @@ export const ThemeProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
-    const [theme, setTheme] = useState(themeList[0]);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     function switchTheme() {
-      setTheme(current=> themeList[themeList.indexOf(current)===0?1:0])
-      console.log(theme);
+      setIsDarkMode(current=> !current)
     }
     const value = {
-      theme,
+      isDarkMode,
       switchTheme,
     };
     //@@viewOff:private

@@ -100,13 +100,14 @@ const ItemCreate = createVisualComponent({
               type="submit"
               onClick={() => {}}
               colorScheme="positive"
-              significance="highlighted"
+              //significance="highlighted"
             >
 <Lsi  lsi={{
       cs: "Přidat",
       en: "Add",
     }} />            </Button>
-            <FormText value={input} name="value" placeholder={placeholderAdd} />
+            <FormText value={input} name="value"               colorScheme="positive"
+placeholder={placeholderAdd} />
           </Form>
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

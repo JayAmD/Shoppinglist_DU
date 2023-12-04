@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils } from "uu5g05";
+import { createVisualComponent, Utils,useAppBackground,AppBackgroundProvider } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import Plus4U5 from "uu_plus4u5g02";
 import Plus4U5App from "uu_plus4u5g02-app";
@@ -9,6 +9,7 @@ import Home from "../routes/home.js";
 import PositionBar from "../bricks/position-bar.js";
 import UserProvider from "../bricks/users/user-provider.js";
 import ThemeProvider from "./theme-provider/theme-provider.js";
+import { useThemeContext } from "./theme-provider/theme-context.js";
 
 
 //@@viewOff:imports
@@ -38,6 +39,7 @@ const ROUTE_MAP = {
 //@@viewOff:css
 
 //@@viewOn:helpers
+
 //@@viewOff:helpers
 
 const Spa = createVisualComponent({
@@ -55,7 +57,7 @@ const Spa = createVisualComponent({
 
   render() {
     //@@viewOn:private
-
+  
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -64,13 +66,16 @@ const Spa = createVisualComponent({
     //@@viewOn:render
     return (
       
+
       <Plus4U5.SpaProvider initialLanguageList={["en", "cs"]}>
         <Uu5Elements.ModalBus>
         <UserProvider>
         <ThemeProvider>
-        
+        <AppBackgroundProvider>
           <PositionBar/>
           <Plus4U5App.Spa routeMap={ROUTE_MAP} />
+          </AppBackgroundProvider>
+
           </ThemeProvider>
 
           </UserProvider>

@@ -6,6 +6,7 @@ import importLsi from "../../lsi/import-lsi.js";
 
 
 import { useUserContext } from "../users/user-context.js";
+import { useThemeContext } from "../../core/theme-provider/theme-context.js";
 
 //@@viewOff:imports
 
@@ -37,6 +38,8 @@ const UsersDrawer = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
+    const { isDarkMode } = useThemeContext();
+
     const { userList, loggedUser } = useUserContext();
     const { children, shoppingList, handleUpdate, leave } = props;
     const inputRef = useRef();
@@ -101,7 +104,11 @@ const UsersDrawer = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <div>
+        <div  className={Config.Css.css({
+           
+           "backgroundColor": isDarkMode&&"#121212"
+           
+          })  } >
           <div style={{ display: "flex", alignItems: "center" }}>
             {userList.find((user) => user.id === shoppingList.ownerId).name}
             {/* {console.log(userList.find((user) => user.id === shoppingList.ownerId)?.name||"nic")} //TODO optat se na tento problem s hookama, prepni si na tento radek a v get.json uprav ownerId na neexistujici ID a uvidis co ti to pri kliknuti na resolve item hodi do konzole*/}
@@ -127,6 +134,7 @@ const UsersDrawer = createVisualComponent({
                 significance="highlighted"
                 colorScheme="green"
                 onClick={handleAddMember}
+                
               />
             </Uu5Elements.Grid>
           )}

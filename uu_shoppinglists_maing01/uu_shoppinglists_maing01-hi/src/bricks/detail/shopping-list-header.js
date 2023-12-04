@@ -6,6 +6,8 @@ import Uu5Forms from "uu5g05-forms";
 import { Dropdown,Text, useAlertBus } from "uu5g05-elements";
 import { useUserContext } from "../users/user-context.js";
 import importLsi from "../../lsi/import-lsi.js";
+import { useThemeContext } from "../../core/theme-provider/theme-context.js";
+
 
 //@@viewOff:imports
 
@@ -67,6 +69,8 @@ const ShoppingListHeader = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const { isDarkmode } = useThemeContext();
+
     const [isEditableTitle, setIsEditableTitle] = useState(false);
     const { addAlert } = useAlertBus();
     const {loggedUser} = useUserContext();
@@ -145,11 +149,12 @@ const ShoppingListHeader = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <Text category="interface" segment="title" type="common">
+        <Text category="interface" segment="title" type="common" style={{color: isDarkmode? 'white':'black'}} >{//TODO Proc mi nefunguje podminka?? nemeni se barva textu
+        }
           {isEditableTitle?
                   <TextInput autoFocus value={props.title} onChange={handleEditTitle} />
                 :props.title}
-       { loggedUser.id===props.ownerId&&<Dropdown label=<Lsi import={importLsi} path={["Header", "actions"]} /> itemList={itemList}/>}
+       { loggedUser.id===props.ownerId&&<Dropdown colorScheme="building"  label=<Lsi import={importLsi} path={["Header", "actions"]} /> itemList={itemList}/>}
         </Text>
           
           

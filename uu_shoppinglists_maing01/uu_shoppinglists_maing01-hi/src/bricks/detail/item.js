@@ -110,6 +110,7 @@ const Item = createVisualComponent({
           <Checkbox className={Css.checkbox()} value={props.item.isResolved} onChange={handleResolve} />
 
           <Text
+          
             value={props.item.value}
             onChange={handleEdit}
             iconRight="uugds-delete"
