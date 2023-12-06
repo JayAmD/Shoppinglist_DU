@@ -1,4 +1,3 @@
-
 db.shoppinglist.insertMany([{
   _id: ObjectId("11e1556d17f0e248baf15f4b"),
   awid: "22222222222222222222222222222222", //appWorkspaceId - unique code specified externally
