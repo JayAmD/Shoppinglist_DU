@@ -79,7 +79,7 @@ beforeEach(async () => {
     name: "Books", // shoppinglist name - mandatory; length is limited to 1-255 characters
     isArchived: false,
     ownerId: "11", //id of the owner
-    memberIdList: [ "33"], // array of member ids
+    memberIdList: [ "3039-912-8064-0000"], // array of member ids
     itemList: [
       {
         id: ObjectId("61e1554617f0e248baf15f42"), //generated unique code

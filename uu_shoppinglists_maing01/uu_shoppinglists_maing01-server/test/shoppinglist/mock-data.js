@@ -8,7 +8,7 @@ db.shoppinglist.insertMany([{
   },
   name: "Groceries", // shoppinglist name - mandatory; length is limited to 1-255 characters
   isArchived: false,
-  ownerId: "8780-522-7322-0000", //TADY MISTO uuIdentity
+  ownerId: "3039-912-8064-0000", //TADY MISTO uuIdentity
   memberIdList: ["22", "33"], // array of member ids
   itemList: [
     {
@@ -59,8 +59,8 @@ db.shoppinglist.insertMany([{
   ],
 },
 {
-  id: ObjectId("33e1556d17f0e248baf15f4b"), //generated unique code
-  awid: "583ebf71c50ed33d7c03dda9", //appWorkspaceId - unique code specified externally
+  _id: ObjectId("33e1556d17f0e248baf15f4b"), //generated unique code
+  awid: "22222222222222222222222222222222", //appWorkspaceId - unique code specified externally
   sys: {
     cts: "2022-01-14 10:50:21.637Z", //create timestamp
     mts: "2022-01-14 10:50:42.542Z", //modification timestamp
@@ -69,7 +69,7 @@ db.shoppinglist.insertMany([{
   name: "Books", // shoppinglist name - mandatory; length is limited to 1-255 characters
   isArchived: false,
   ownerId: "11", //id of the owner
-  memberIdList: [ "33"], // array of member ids
+  memberIdList: [ "3039-912-8064-0000"], // array of member ids
   itemList: [
     {
       id: ObjectId("61e1554617f0e248baf15f42"), //generated unique code
@@ -92,6 +92,5 @@ db.shoppinglist.insertMany([{
       isResolved: false,
     },
   ],
-}]
-);
-
+}
+])
