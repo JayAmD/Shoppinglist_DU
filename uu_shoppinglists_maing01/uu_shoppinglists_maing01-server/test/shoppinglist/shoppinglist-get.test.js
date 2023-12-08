@@ -126,6 +126,8 @@ describe("Shoppinglist Get uuCMD tests", () => {
 
     expect(dtoOut.status).toEqual(200);
     expect(dtoOut.uuAppErrorMap).toEqual({});
+    console.log(dtoOut.data);
+
     expect(dtoOut.data).toEqual(
       expect.objectContaining({
         awid: "22222222222222222222222222222222",
