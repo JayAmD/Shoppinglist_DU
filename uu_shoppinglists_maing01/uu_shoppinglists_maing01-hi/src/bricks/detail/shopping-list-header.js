@@ -1,13 +1,12 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content,Lsi,PropTypes, useState } from "uu5g05";
+import { createVisualComponent, Utils, Content, Lsi, PropTypes, useState, useScreenSize, useEffect } from "uu5g05";
 import Config from "./config/config.js";
 
 import Uu5Forms from "uu5g05-forms";
-import { Dropdown,Text, useAlertBus } from "uu5g05-elements";
+import Uu5Elements, { Dropdown, Text, useAlertBus } from "uu5g05-elements";
 import { useUserContext } from "../users/user-context.js";
 import importLsi from "../../lsi/import-lsi.js";
 import { useThemeContext } from "../../core/theme-provider/theme-context.js";
-
 
 //@@viewOff:imports
 
@@ -17,11 +16,11 @@ import { useThemeContext } from "../../core/theme-provider/theme-context.js";
 
 //@@viewOn:css
 const Css = {
-  main: () => Config.Css.css({
-    display: "flex",
+  main: () =>
+    Config.Css.css({
+      display: "flex",
       padding: 4,
-  }),
-  
+    }),
 };
 //@@viewOff:css
 
@@ -73,9 +72,17 @@ const ShoppingListHeader = createVisualComponent({
 
     const [isEditableTitle, setIsEditableTitle] = useState(false);
     const { addAlert } = useAlertBus();
-    const {loggedUser} = useUserContext();
+    const { loggedUser } = useUserContext();
 
+    const [screenSize] = useScreenSize();
 
+    const [isMobile, setIsMobile] = useState();
+    useEffect(() => {
+      setIsMobile(() => {
+        if (["xs"].includes(screenSize)) return true;
+        else return false;
+      });
+    }, [screenSize]);
 
     function showError(error, header = "") {
       addAlert({
@@ -89,42 +96,34 @@ const ShoppingListHeader = createVisualComponent({
       {
         children: <Lsi import={importLsi} path={["Header", "title"]} />,
         icon: "uugds-pencil",
-        onClick:handleEditableTitle
+        onClick: handleEditableTitle,
       },
       {
         children: <Lsi import={importLsi} path={["Header", "archive"]} />,
         icon: "uugds-folder",
-        onClick:handleArchive
+        onClick: handleArchive,
       },
-     
-    ]
+    ];
 
     function handleEditableTitle() {
-      setIsEditableTitle((prevState)=>{
-        let result =prevState
-        prevState?result= false:result= true
-        return result
-      })
-      
+      setIsEditableTitle((prevState) => {
+        let result = prevState;
+        prevState ? (result = false) : (result = true);
+        return result;
+      });
     }
-    
-
-    
 
     function handleEditTitle(event) {
       const newEvent = new Utils.Event(event.data.value, event); //TODO: Opet jako u componenty Item, si nejsem jist jak Utils.Event funguje
       const title = newEvent.data;
       try {
         props.onEditTitle(title);
-        
       } catch (error) {
         ShoppingListHeader.logger.error("Error changing the title", error);
         showError(error, "List title edition failed!");
       }
-    
     }
     function handleArchive() {
-      
       try {
         props.onArchive();
         addAlert({
@@ -136,7 +135,6 @@ const ShoppingListHeader = createVisualComponent({
         ShoppingListHeader.logger.error("Error archiving the title", error);
         showError(error, "List archivation failed!");
       }
-    
     }
     //@@viewOff:private
 
@@ -149,15 +147,20 @@ const ShoppingListHeader = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <Text category="interface" segment="title" type="common" style={{color: isDarkmode? 'white':'black'}} >{//TODO Proc mi nefunguje podminka?? nemeni se barva textu
-        }
-          {isEditableTitle?
-                  <TextInput autoFocus value={props.title} onChange={handleEditTitle} />
-                :props.title}
-       { loggedUser.id===props.ownerId&&<Dropdown colorScheme="building"  label=<Lsi import={importLsi} path={["Header", "actions"]} /> itemList={itemList}/>}
+        <Text category="interface" segment="title" type="common" style={{ color: isDarkmode ? "white" : "black" }}>
+          {
+            //TODO Proc mi nefunguje podminka?? nemeni se barva textu
+          }
+          {isEditableTitle ? <TextInput autoFocus value={props.title} onChange={handleEditTitle} /> : props.title}
+          {loggedUser.id === props.ownerId && (
+            <Dropdown
+              colorScheme="building"
+              label={isMobile?<Uu5Elements.Icon icon="uugdsstencil-uiaction-edit-uubml"/>:<Lsi import={importLsi} path={["Header", "actions"]} />}
+              itemList={itemList}
+            />
+          )}
         </Text>
-          
-          
+
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
     ) : null;

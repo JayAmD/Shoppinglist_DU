@@ -1,9 +1,8 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, PropTypes,useLsi, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, PropTypes, useLsi, Lsi,useEffect, useScreenSize } from "uu5g05";
 import Config from "./config/config.js";
-import { Button, useAlertBus } from "uu5g05-elements";
+import Uu5Elements,{ Button, useAlertBus } from "uu5g05-elements";
 import { Form, FormText } from "uu5g05-forms";
-
 
 //@@viewOff:imports
 
@@ -49,11 +48,20 @@ const ItemCreate = createVisualComponent({
     const { children } = props;
     const { addAlert } = useAlertBus();
 
-    const [input, setInput] = useState("");//TODO: FormText nema value property, nejde prepsat. Zeptat se na to.
+    const [input, setInput] = useState(""); //TODO: FormText nema value property, nejde prepsat. Zeptat se na to.
 
-    const placeholderAdd=useLsi({cs:"Nová položka",en:"New item"})
+    const [screenSize] = useScreenSize();
 
-    
+    const [isMobile, setIsMobile] = useState();
+    useEffect(() => {
+      setIsMobile(() => {
+        if (["xs"].includes(screenSize)) return true;
+        else return false;
+      });
+    }, [screenSize]);
+
+    const placeholderAdd = useLsi({ cs: "Nová položka", en: "New item" });
+
     function showError(error, header = "") {
       addAlert({
         header,
@@ -74,7 +82,6 @@ const ItemCreate = createVisualComponent({
           durationMs: 2000,
         });
         setInput("");
-        
       } catch (error) {
         ItemCreate.logger.error("Error adding the item", error);
         showError(error, "Item addition failed!");
@@ -102,12 +109,16 @@ const ItemCreate = createVisualComponent({
               colorScheme="positive"
               //significance="highlighted"
             >
-<Lsi  lsi={{
-      cs: "Přidat",
-      en: "Add",
-    }} />            </Button>
-            <FormText value={input} name="value"               colorScheme="positive"
-placeholder={placeholderAdd} />
+              <Uu5Elements.Icon icon="uugds-plus-circle"/>
+              {isMobile?"":
+              <Lsi
+                lsi={{
+                  cs: "Přidat",
+                  en: "Add",
+                }}
+              />}
+            </Button>
+            <FormText value={input} name="value" colorScheme="positive" placeholder={placeholderAdd} />
           </Form>
         </div>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

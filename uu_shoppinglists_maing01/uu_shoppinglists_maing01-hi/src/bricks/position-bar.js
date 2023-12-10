@@ -59,12 +59,12 @@ const PositionBar = createVisualComponent({
     const [, setRoute] = useRoute();
 
     const actionList = [
-      {
-        children: (
-          <Lsi import={importLsi} path={isDarkMode ? ["Menu", "isDarkTheme"]:["Menu", "isLightTheme"]} />
-        ),
-        onClick: () => switchTheme(),
-      },
+      // {
+      //   children: (
+      //     <Lsi import={importLsi} path={isDarkMode ? ["Menu", "isDarkTheme"]:["Menu", "isLightTheme"]} />
+      //   ),
+      //   onClick: () => switchTheme(),
+      // },//TODO: Pro konzultaci poznamek k FE odkomentovat
       // // homework routes
       {
         children: <Lsi import={importLsi} path={["Menu", "home"]} />,

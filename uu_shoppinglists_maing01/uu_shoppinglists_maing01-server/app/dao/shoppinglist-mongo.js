@@ -48,7 +48,7 @@ class ShoppinglistMongo extends UuObjectDao {
   // list DAO method
 
   async list(awid, uuIdentity, sortBy, order, pageInfo) {
-    const filter = { awid, $or: [{ ownerId: uuIdentity }, { memberIdList: uuIdentity }] };
+    const filter = { awid, $or: [{ ownerId: uuIdentity }, { memberIdList: uuIdentity }] }
 
     const sort = {
       [sortBy]: order === "asc" ? 1 : -1,
@@ -67,7 +67,7 @@ class ShoppinglistMongo extends UuObjectDao {
   //itemUpdate DAO method
 
   async itemUpdate(awid, shoppingListId,itemId, data) {
-    let filter = { awid, id:shoppingListId, "itemList.id":new ObjectId(itemId) };
+    let filter = {awid, id:shoppingListId, "itemList.id":new ObjectId(itemId) };
     return await super.findOneAndUpdate(filter, { $set: { "itemList.$.value": data.value, "itemList.$.isResolved": data.isResolved} }, "NONE");
   }
 
